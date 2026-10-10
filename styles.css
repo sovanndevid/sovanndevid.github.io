@@ -106,3 +106,18 @@ h1 em{color:var(--blue)}
   .header-inner{gap:17px}
   .about-grid{gap:32px}
 }
+
+
+/* Study Buddy feature card: simple, responsive product illustration. */
+.art-study{background:linear-gradient(130deg,#21394a 0%,#3c5b70 70%,#7e9ab0 100%)}
+.art-study .project-art-header{color:#e9f4ff}
+.study-display{position:absolute;left:50%;top:62px;transform:translateX(-50%) rotate(-3deg);width:min(73%,360px);padding:22px 23px;background:#f8faf5;border-radius:15px;box-shadow:18px 20px 30px #122c3b80;color:#183342}
+.study-top,.study-bottom{display:flex;justify-content:space-between;gap:8px;font:500 8px var(--mono);letter-spacing:.6px}
+.study-top span:last-child{color:#587b67}
+.study-timer{text-align:center;font-size:clamp(50px,6vw,79px);font-weight:800;letter-spacing:-5px;line-height:1.6}
+.study-timer span{color:#7f9e85}
+.study-progress{height:7px;background:#dbe7dc;border-radius:10px;overflow:hidden}
+.study-progress span{display:block;width:65%;height:100%;background:#9cbf9a;border-radius:10px}
+.study-bottom{margin-top:16px;color:#6d8283}
+.study-caption{position:absolute;right:20px;bottom:16px;padding:10px 14px;background:#d7f1b1;transform:rotate(5deg);border-radius:5px;font:500 8px var(--mono);color:#163d30}
+@media(max-width:440px){.study-display{width:84%;padding:19px 16px}.study-timer{font-size:58px}.study-caption{font-size:7px}}
