@@ -1,5 +1,5 @@
 name: Build original FitnessFlex Flutter Web app
-# Release QA-tested password-reset repair (Flutter source 1c405649)
+# Publish QA-tested guest exploration and compressed Flutter Web assets
 
 on:
   workflow_dispatch:
@@ -40,6 +40,13 @@ jobs:
       - name: Resolve Flutter dependencies
         working-directory: flutter-source/fitness_flex_app
         run: flutter pub get
+
+      - name: Compress oversized photos for Web only
+        working-directory: flutter-source/fitness_flex_app
+        run: |
+          python3 -m venv /tmp/fitnessflex-web-images
+          /tmp/fitnessflex-web-images/bin/pip install --quiet Pillow==11.3.0
+          /tmp/fitnessflex-web-images/bin/python scripts/optimize_web_images.py
 
       - name: Build Flutter Web for portfolio subpath
         working-directory: flutter-source/fitness_flex_app
