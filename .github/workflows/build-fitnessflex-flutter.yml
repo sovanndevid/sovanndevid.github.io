@@ -1,5 +1,5 @@
 name: Build original FitnessFlex Flutter Web app
-# Rebuild released Flutter source 22f743e with real anonymous guest support.
+# Rebuild QA-verified permanent dark mode and guest UI source b3d5993.
 
 on:
   workflow_dispatch:
