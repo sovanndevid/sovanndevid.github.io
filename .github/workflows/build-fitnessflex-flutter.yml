@@ -1,5 +1,5 @@
 name: Build original FitnessFlex Flutter Web app
-# Publish QA-tested guest exploration and compressed Flutter Web assets
+# Rebuild released Flutter source 22f743e with real anonymous guest support.
 
 on:
   workflow_dispatch:
