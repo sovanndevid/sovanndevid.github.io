@@ -1,5 +1,5 @@
 name: Build original FitnessFlex Flutter Web app
-# Release QA-verified portfolio redesign from Flutter source a52e56d
+# Release QA-tested password-reset repair (Flutter source 1c405649)
 
 on:
   workflow_dispatch:
