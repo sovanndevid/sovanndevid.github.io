@@ -108,7 +108,10 @@ h1 em{color:var(--blue)}
 }
 
 
-/* Study Buddy feature card: simple, responsive product illustration. */
+/* V2 enhancements — preserved original palette and layout */
+.hero-roles{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 18px}
+.hero-roles span{padding:8px 11px;border:1px solid #bdc9bb;border-radius:100px;font:500 9px var(--mono);letter-spacing:.3px;color:#304239;background:#f0f5eb}
+.contact-inline{color:#344049}
 .art-study{background:linear-gradient(130deg,#21394a 0%,#3c5b70 70%,#7e9ab0 100%)}
 .art-study .project-art-header{color:#e9f4ff}
 .study-display{position:absolute;left:50%;top:62px;transform:translateX(-50%) rotate(-3deg);width:min(73%,360px);padding:22px 23px;background:#f8faf5;border-radius:15px;box-shadow:18px 20px 30px #122c3b80;color:#183342}
@@ -120,4 +123,17 @@ h1 em{color:var(--blue)}
 .study-progress span{display:block;width:65%;height:100%;background:#9cbf9a;border-radius:10px}
 .study-bottom{margin-top:16px;color:#6d8283}
 .study-caption{position:absolute;right:20px;bottom:16px;padding:10px 14px;background:#d7f1b1;transform:rotate(5deg);border-radius:5px;font:500 8px var(--mono);color:#163d30}
-@media(max-width:440px){.study-display{width:84%;padding:19px 16px}.study-timer{font-size:58px}.study-caption{font-size:7px}}
+.impact-section{padding:85px 0;background:#e9eddf}
+.impact-wrap{display:grid;grid-template-columns:.9fr 1.1fr;align-items:start;gap:75px}
+.impact-wrap h2{font-size:clamp(38px,5vw,72px);letter-spacing:-.065em;line-height:1.07;margin:27px 0}
+.impact-wrap h2 em{font-family:Georgia,serif;font-weight:400}
+.impact-wrap>div>p{line-height:1.85;color:#52625a;max-width:380px}
+.impact-points{display:grid;gap:0;border-top:1px solid #bbc8b8}
+.impact-points article{display:grid;grid-template-columns:38px 110px 1fr;gap:12px;align-items:baseline;padding:22px 0;border-bottom:1px solid #bbc8b8}
+.impact-points span{font:500 11px var(--mono);color:#577259}
+.impact-points h3{margin:0;font-size:22px}
+.impact-points p{margin:0;font-size:12px;line-height:1.8;color:#52625a}
+.resume-contact{display:inline-flex;align-items:center;gap:20px;margin-top:20px;padding:14px 20px;color:#172219;background:#c7f681;font-weight:800;border-radius:11px;font-size:12px}
+.resume-contact:hover,.resume-contact:focus-visible{background:#dbffb1}
+@media(max-width:950px){.impact-wrap{grid-template-columns:1fr;gap:35px}}
+@media(max-width:560px){.impact-section{padding:65px 0}.impact-points article{grid-template-columns:30px 1fr;gap:7px}.impact-points p{grid-column:2}.study-display{width:82%;padding:17px}.study-timer{font-size:54px}.study-caption{font-size:7px}.hero-roles{gap:6px}.hero-roles span{font-size:8px;padding:7px 8px}.contact-inline{display:none}}

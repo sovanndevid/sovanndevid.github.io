@@ -71,6 +71,26 @@
     });
   }
 
+
+  // GA4 events: avoid passing email addresses or other personal data.
+  document.addEventListener('click', event => {
+    const link = event.target.closest('a');
+    if (!link || typeof window.gtag !== 'function') return;
+    let eventName = '';
+    const props = { page_type: document.body.dataset.pageType || 'homepage' };
+    if (link.dataset.track === 'resume_download') eventName = 'resume_download';
+    else if (link.dataset.track === 'project_open') {
+      eventName = 'portfolio_project_open';
+      props.project_name = link.dataset.project || 'unknown';
+    }
+    else if (link.dataset.track === 'social_click') {
+      eventName = 'portfolio_social_click';
+      props.destination = link.dataset.destination || 'other';
+    }
+    else if (link.href && link.href.startsWith('mailto:')) eventName = 'portfolio_contact_click';
+    if (eventName) window.gtag('event', eventName, props);
+  });
+
   const year = document.querySelector('#current-year');
   if (year) year.textContent = String(new Date().getFullYear());
 
