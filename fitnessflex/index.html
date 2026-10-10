@@ -179,7 +179,7 @@
 const $ = id => document.getElementById(id);
 const $$ = sel => Array.from(document.querySelectorAll(sel));
 const STORAGE_KEY = 'fitnessflex.motionlab.sessions.v1';
-const MEDIAPIPE_VERSION = '0.10.22';
+const MEDIAPIPE_VERSION = '0.10.35';
 const LINKS = [[11,12],[11,13],[13,15],[12,14],[14,16],[11,23],[12,24],[23,24],[23,25],[25,27],[24,26],[26,28],[27,29],[29,31],[28,30],[30,32]];
 const clamp = (v,lo,hi) => Math.min(hi,Math.max(lo,v));
 const lerp = (a,b,t) => a+(b-a)*t;
@@ -230,7 +230,7 @@ function setSource(source){
   $('modeChip').textContent=source==='demo'?'SAMPLE MODE':'LIVE CAMERA';
   $('chartType').textContent=source==='demo'?'DEMO STREAM':'LIVE LANDMARKS';
   $('startSession').textContent=source==='demo'?'▶ Start sample':'▣ Start camera';
-  $('sourceNote').textContent=source==='demo'?'Sample mode uses generated landmarks and a deterministic squat sequence. Scores are illustrative; no videos or models are downloaded.':'Camera permission is requested only when you press Start camera. MediaPipe library and model files load from a CDN; video remains in your browser.';
+  $('sourceNote').textContent=source==='demo'?'Sample mode uses generated landmarks and a deterministic squat sequence. Scores are illustrative; no videos or models are downloaded.':'Camera permission is requested only when you press Start camera. MediaPipe code and model files download from pinned CDN locations; video processing stays in the browser. A connection is needed to load the model.';
   $('viewLabel').textContent=source==='demo'?'SIDE VIEW · ILLUSTRATIVE':'CAMERA TRACKING';
   $('cameraVideo').hidden=true; $('stageEmpty').style.display='flex';
   $('stageStatus').innerHTML='<span class="status-pulse"></span> READY';
@@ -266,8 +266,11 @@ async function startTracking(){
       await initCamera();
     }catch(error){
       stopMedia();
-      $('stageStatus').innerHTML='<span class="status-pulse"></span> CAMERA UNAVAILABLE';
-      $('coachingCue').textContent='Camera unavailable. Check permissions and run the site through localhost.';
+      const poseFailure=error.component==='pose-engine';
+      $('stageStatus').innerHTML='<span class="status-pulse"></span> '+(poseFailure?'TRACKER LOAD FAILED':'CAMERA UNAVAILABLE');
+      $('coachingCue').textContent=poseFailure
+        ? 'The camera was accessible, but the movement tracker could not start. Check your connection, then tap Start camera to retry. Sample mode still works.'
+        : (error.name==='NotAllowedError'?'Camera permission was denied. Allow camera access for this site in Safari settings and try again.':'Unable to start camera. Check Safari camera permissions and try again.');
       toast(String(error.message||error).slice(0,220));
       return;
     }finally{$('startSession').disabled=false}
@@ -278,23 +281,66 @@ async function startTracking(){
   $('stageStatus').innerHTML='<span class="status-pulse"></span> TRACKING';
   app.raf=requestAnimationFrame(tick);
 }
-async function initCamera(){
-  if(!navigator.mediaDevices?.getUserMedia)throw Error('Browser camera requires localhost or HTTPS and an available camera.');
-  const stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:1280},height:{ideal:720}},audio:false});
-  app.media=stream;
-  const video=$('cameraVideo');video.srcObject=stream;video.hidden=false;
-  await video.play();
-  if(!app.landmarker){
+// Use a published npm release and the package's actual ESM entry file.
+// A prior build referenced @mediapipe/tasks-vision@0.10.22, a nonexistent stable
+// release. On iPhone Safari the CDN returned a failed module import.
+// The alternate host also provides a second chance for restricted networks.
+const POSE_ASSET_HOSTS=[
+  {name:'jsDelivr',base:`https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@${MEDIAPIPE_VERSION}`},
+  {name:'UNPKG',base:`https://unpkg.com/@mediapipe/tasks-vision@${MEDIAPIPE_VERSION}`}
+];
+const POSE_MODEL_URL='https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16/1/pose_landmarker_lite.task';
+async function initPoseEngine(){
+  if(app.landmarker)return;
+  const attempts=[];
+  for(const host of POSE_ASSET_HOSTS){
     try{
-      const {PoseLandmarker,FilesetResolver}=await import(`https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@${MEDIAPIPE_VERSION}/+esm`);
-      app.vision=await FilesetResolver.forVisionTasks(`https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@${MEDIAPIPE_VERSION}/wasm`);
-      app.landmarker=await PoseLandmarker.createFromOptions(app.vision,{baseOptions:{modelAssetPath:'https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16/1/pose_landmarker_lite.task',delegate:'CPU'},runningMode:'VIDEO',numPoses:1,minPoseDetectionConfidence:0.5,minPosePresenceConfidence:0.5,minTrackingConfidence:0.5});
-    }catch(err){throw Error(`Pose engine could not load. You need internet access for the first camera session. ${err.message||''}`)}
+      $('stageStatus').innerHTML='<span class="status-pulse"></span> LOADING TRACKER';
+      const visionPackage=await import(host.base+'/vision_bundle.mjs');
+      const {PoseLandmarker,FilesetResolver}=visionPackage;
+      if(!PoseLandmarker||!FilesetResolver)throw new Error('PoseLandmarker exports not found');
+      const files=await FilesetResolver.forVisionTasks(host.base+'/wasm');
+      const detector=await PoseLandmarker.createFromOptions(files,{
+        baseOptions:{modelAssetPath:POSE_MODEL_URL,delegate:'CPU'},
+        runningMode:'VIDEO',numPoses:1,
+        minPoseDetectionConfidence:0.5,minPosePresenceConfidence:0.5,minTrackingConfidence:0.5
+      });
+      app.vision=files;
+      app.landmarker=detector;
+      return;
+    }catch(err){
+      attempts.push(`${host.name}: ${String(err?.message||err).slice(0,140)}`);
+      console.warn(`FitnessFlex: ${host.name} pose engine unavailable`,err);
+    }
   }
+  const error=new Error('Pose model failed to load from both CDNs. Confirm internet access, turn off content blockers for this site and retry. '+attempts.join(' | '));
+  error.component='pose-engine';
+  throw error;
+}
+async function initCamera(){
+  if(!window.isSecureContext||!navigator.mediaDevices?.getUserMedia){
+    throw new Error('Live tracking needs HTTPS and a browser that supports camera access.');
+  }
+  let stream;
+  try{
+    stream=await navigator.mediaDevices.getUserMedia({
+      video:{facingMode:'user',width:{ideal:1280},height:{ideal:720}},audio:false
+    });
+  }catch(err){
+    // Retain the browser's NotAllowedError/NotFoundError for helpful UI feedback.
+    throw err;
+  }
+  app.media=stream;
+  const video=$('cameraVideo');
+  video.setAttribute('playsinline','');
+  video.muted=true;
+  video.srcObject=stream;
+  video.hidden=false;
+  await video.play();
+  await initPoseEngine();
   app.cameraReady=true;
   resizeCanvas();
 }
-
 const P={LS:11,RS:12,LH:23,RH:24,LK:25,RK:26,LA:27,RA:28};
 function syntheticPose(t){
   const cycle=(t/4100)%1;const idx=Math.floor(t/4100)%4;
