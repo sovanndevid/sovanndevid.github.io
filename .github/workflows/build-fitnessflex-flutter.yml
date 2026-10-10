@@ -1,4 +1,5 @@
 name: Build original FitnessFlex Flutter Web app
+# Rebuild against updated source c31d7e0 (Google Fonts compatibility)
 
 on:
   workflow_dispatch:
