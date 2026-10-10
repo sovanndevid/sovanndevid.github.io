@@ -1,0 +1,74 @@
+name: Build original FitnessFlex Flutter Web app
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/build-fitnessflex-flutter.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: fitnessflex-flutter-build
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Compile and integrate Flutter Web
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - name: Check out portfolio Pages repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Check out original Flutter repository
+        uses: actions/checkout@v4
+        with:
+          repository: sovanndevid/Capstone_Project-Fitness_Flex
+          ref: main
+          path: flutter-source
+          persist-credentials: false
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Flutter version
+        run: flutter --version
+
+      - name: Resolve Flutter dependencies
+        working-directory: flutter-source/fitness_flex_app
+        run: flutter pub get
+
+      - name: Build Flutter Web for portfolio subpath
+        working-directory: flutter-source/fitness_flex_app
+        run: flutter build web --release --base-href /fitnessflex-app/
+
+      - name: Copy compiled website into Pages repository
+        run: |
+          mkdir -p fitnessflex-app
+          rsync -a --delete flutter-source/fitness_flex_app/build/web/ fitnessflex-app/
+          # Do not accidentally publish raw project files or bundled credentials.
+          if grep -R -E 'sk-proj-[A-Za-z0-9_-]{30,}' fitnessflex-app/; then
+            echo 'Detected a potential credential in compiled web assets.' >&2
+            exit 1
+          fi
+          printf "Flutter Web compiled from %s at %s\n" \
+            "$(git -C flutter-source rev-parse HEAD)" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > fitnessflex-app/BUILD_SOURCE.txt
+
+      - name: Commit compiled Flutter Web assets
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A fitnessflex-app
+          if ! git diff --cached --quiet; then
+            git commit -m "Build actual FitnessFlex Flutter Web from original repository"
+            git push origin HEAD:main
+          else
+            echo "Flutter Web assets already up to date."
+          fi
