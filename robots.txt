@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://sovanndevid.xyz/sitemap.xml
