@@ -1,1 +1,1 @@
-Flutter Web compiled from 1c405649519f5cc9bd2e6dab4143f18728b0751e at 2026-10-10T12:02:03Z
+Flutter Web compiled from 43268d8d4c2eda7d7f1c8846e5f92d25f20abba2 at 2026-10-10T12:34:54Z
