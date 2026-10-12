@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Weekly Timetable | Study Buddy</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/chatbot.css">
+  <link rel="stylesheet" href="../css/timetable.css"/>
+</head>
+<body>
+
+  <div data-include="../components/header.html"></div>
+  <main class="timer-container">
+    <h1>My Timetable</h1>
+
+    <div class="table-wrapper">
+
+      <table role="grid" aria-readonly="false" tabindex="0" aria-label="Weekly timetable grid">
+        <thead>
+          <tr role="row">
+            <th role="columnheader">Time</th>
+            <th role="columnheader">Monday</th>
+            <th role="columnheader">Tuesday</th>
+            <th role="columnheader">Wednesday</th>
+            <th role="columnheader">Thursday</th>
+            <th role="columnheader">Friday</th>
+          </tr>
+        </thead>
+        <tbody id="timetable-body">
+        </tbody>
+      </table>
+    </div>
+  
+    <p style="margin-top: 10px;">Click any cell to edit your schedule. Changes auto-save.</p>
+  
+    <div style="margin-top: 30px;">
+      <button onclick="sendTimetable()">Send Timetable via Email</button>
+    </div>
+    <section class="email-reminder">
+      <h3>Send a Peer Reminder</h3>
+      <form id="form">
+        <label for="from_email">Your Email:</label>
+        <input type="email" name="from_email" id="from_email" required />
+        <label for="to_email">To Email:</label>
+        <input type="email" name="to_email" id="to_email" required />
+        <label for="message">Message:</label>
+        <textarea name="message" id="message" required></textarea>
+        <button type="submit" id="button">Send Email</button>
+      </form>
+    </section>
+    </div>
+  </main>
+  <div data-include="../components/chatbot.html"></div>
+  <div data-include="../components/footer.html"></div>
+  
+  <script src="../js/include.js"></script>
+  <script src="../js/script.js"></script>
+  <script src="../js/chatbot.js"></script>
+  <script src="../js/timetable.js"></script>
+
+</body>
+</html>

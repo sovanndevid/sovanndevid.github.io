@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>To Do List | Study Buddy</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/chatbot.css">
+  <link rel="stylesheet" href="../css/todolist.css"/>
+</head>
+<body>
+
+  <div data-include="../components/header.html"></div>
+  <header class="todo-header">
+    <div class="header-content">
+      <h1>Stay on Track</h1>
+      <p>Manage your daily tasks and study goals with ease.</p>
+    </div>
+  </header>
+  <div class="todo-section">
+    <div class="todo-container">
+      <h2>Daily To-Do List</h2>
+      <input type="text" id="taskInput" placeholder="Enter your task" spellcheck="true" autocomplete="off" />
+      <button id="addTaskButton">Add Task</button>
+      <button id="saveTaskButton">Save</button>
+      <ul id="taskList"></ul>
+    </div>
+  </div>
+  <div data-include="../components/chatbot.html"></div>
+  <div data-include="../components/footer.html"></div>
+  
+  <script src="../js/include.js"></script>
+  <script src="../js/script.js"></script>
+  <script src="../js/chatbot.js"></script>
+  <script src="../js/todolist.js"></script>
+  
+</body>
+</html>

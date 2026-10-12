@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Study Buddy - Home</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/chatbot.css"/>
+</head>
+<body>
+  <div data-include="components/header.html"></div>
+  <section class="hero centered-layout">
+    <h1>Welcome to Study Buddy</h1>
+    <p>Your personal companion to track tasks, manage time, and stay focused!</p>
+    <a href="#features" class="nav-btn">Explore Features</a>
+  </section>
+  <section id="features" class="card-container">
+    <div class="card">
+      <a href="html/todolist.html">
+        <div class="card-inner">
+          <div class="card-front">
+            <h3>To-Do List</h3>
+            <p>Organise your daily tasks easily.</p>
+            <img src="images/to-do-list.jpg" alt="To-Do List Image"/>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="card">
+      <a href="html/timetable.html">
+        <div class="card-inner">
+          <div class="card-front">
+            <h3>Weekly Timetable</h3>
+            <p>Plan your week visually at a glance.</p>
+            <img src="images/weekly-timetable.webp" alt="Weekly Timetable Image"/>
+          </div>
+        </div>
+      </a>
+    </div>           
+    <div class="card">
+      <a href="html/quotes.html">
+        <div class="card-inner">
+          <div class="card-front">
+            <h3>Motivational Quotes</h3>
+            <p>Get inspired every day!</p>
+            <img src="images/motivational-quote.avif" alt="Motivational Quotes Image"/>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="card">
+      <a href="html/countdown.html">
+        <div class="card-inner">
+          <div class="card-front">
+            <h3>Countdown Timer</h3>
+            <p>Countdown to your deadlines.</p>
+            <img src="images/countdown-timer.jpeg" alt="Countdown Timer Image"/>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="card">
+      <a href="html/pomodoro.html">
+        <div class="card-inner">
+          <div class="card-front">
+            <h3>Pomodoro Timer</h3>
+            <p>Work smarter, not harder.</p>
+            <img src="images/pomodoro-timer.png" alt="Pomodoro Timer Image"/>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+  <section id="about" class="hero centered-layout">
+    <h2>About Us</h2>
+    <p>Study Buddy is your go-to tool for productivity. We believe in making study life easier, more organised, and more successful. Built by students, for students.</p>
+  </section>
+  <div data-include="components/chatbot.html"></div>
+  <div data-include="components/footer.html"></div>
+  <script src="js/include.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/chatbot.js" defer></script>
+  
+</body>
+</html>
+

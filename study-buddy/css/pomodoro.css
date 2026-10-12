@@ -1,0 +1,200 @@
+/* Container */
+.timer-container {
+  max-width: 600px;
+  margin: 50px auto;
+  text-align: center;
+  padding: 20px;
+}
+
+.description {
+  font-size: 1rem;
+  color: #475569;
+  margin-bottom: 30px;
+}
+
+/* Mode display (Session/Break) */
+.center-text #mode {
+  background: #2563eb;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 1rem;
+  display: inline-block;
+  margin-top: 8px;
+  font-weight: bold;
+}
+
+body {
+  background: linear-gradient(to bottom, #f1f7fd, #e2ecf9);
+  font-family: 'Segoe UI', sans-serif;
+  color: #1a1a1a;
+  overflow-x: hidden;
+  padding-bottom: 80px;
+}
+
+/* Progress Ring */
+.progress-ring-wrapper {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 30px;
+}
+
+.progress-ring {
+  transform: rotate(-90deg);
+}
+
+.progress-ring__circle {
+  stroke: #1e3a8a;
+  stroke-width: 8;
+  fill: transparent;
+  transition: stroke-dashoffset 1s linear;
+}
+
+.center-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.center-text #time {
+  font-size: 2.4rem;
+  font-weight: bold;
+  color: #0f172a;
+}
+
+.pulsing #time {
+  animation: pulse 1s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Unified Button Style */
+.controls button,
+.time-setters button,
+.modal-actions button {
+  background-color: #2563eb;
+  color: white;
+  padding: 12px 20px;
+  margin: 8px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.controls button:hover,
+.time-setters button:hover,
+.modal-actions button:hover {
+  background-color: #1e3a8a;
+}
+
+/* Label above time-setters */
+.focus-label {
+  margin-top: 40px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+/* Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #ffffff;
+  padding: 30px 40px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-in-out;
+  max-width: 400px;
+  width: 90%;
+}
+
+.modal-content h2 {
+  margin-bottom: 10px;
+  color: #2563eb;
+}
+
+.modal-content p {
+  font-size: 1em;
+  margin-bottom: 20px;
+  color: #334155;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .timer-container {
+    padding: 0 20px;
+  }
+
+  .controls,
+  .time-setters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .controls button,
+  .time-setters button,
+  .modal-actions button {
+    width: 100%;
+    min-width: 130px;
+    margin: 5px;
+  }
+
+  .progress-ring-wrapper {
+    width: 200px;
+    height: 200px;
+  }
+
+  .modal-content {
+    width: 90%;
+    padding: 25px;
+  }
+
+  .modal-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+}

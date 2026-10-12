@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pomodoro Timer | Study Buddy</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/chatbot.css">
+  <link rel="stylesheet" href="../css/pomodoro.css" />
+
+</head>
+<body>
+
+  <div data-include="../components/header.html"></div>
+
+  <main class="timer-container">
+    <h1>Pomodoro Timer</h1>
+    <p class="description">A simple, effective time management method using work and break cycles.</p>
+
+    <div class="progress-ring-wrapper">
+      <svg class="progress-ring" width="200" height="200">
+        <circle class="progress-ring__circle" stroke="#2563eb" stroke-width="8" fill="transparent" r="90" cx="100" cy="100" />
+      </svg>
+      <div class="center-text">
+        <div id="time">25:00</div>
+        <div id="mode">Session</div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button onclick="startTimer()">Start</button>
+      <button onclick="pauseTimer()">Pause</button>
+      <button onclick="resetTimer()">Reset</button>
+      <button onclick="startBreakManually()">Start Break</button>
+    </div>
+
+    <h3 class="focus-label">Choose a Focus Mode</h3>
+    <div class="time-setters">
+      <button onclick="setTime(25, 5)">Pomodoro (25/5)</button>
+      <button onclick="setTime(15, 5)">Short Task (15/5)</button>
+      <button onclick="setTime(50, 10)">Long Task (50/10)</button>
+    </div>
+  </main>
+
+    <div id="sessionModal" class="modal">
+        <div class="modal-content">
+        <h2 id="modalTitle">Session Complete!</h2>
+        <p>What would you like to do next?</p>
+        <div class="modal-actions">
+          <button id="startBreakButton">Start Break</button>
+          <button id="startNewSessionButton">New Session</button>
+          <button id="closeModalButton">Close</button>
+        </div>
+      </div>
+    </div>
+  <div data-include="../components/chatbot.html"></div>
+  <div data-include="../components/footer.html"></div>
+
+  <script src="../js/include.js"></script>
+  <script src="../js/script.js"></script>
+  <script src="../js/chatbot.js"></script>
+  <script src="../js/pomodoro.js"></script>
+</body>
+</html>

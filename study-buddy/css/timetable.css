@@ -1,0 +1,144 @@
+/* Timetable container */
+.timer-container {
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  text-align: center;
+}
+
+/* Timetable header */
+.timer-container header {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  font-weight: bold;
+  color: #003366;
+}
+
+/* Table structure */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+th, td {
+  border: 1px solid #cce4f7;
+  padding: 12px;
+  text-align: center;
+  font-size: 0.95rem;
+  min-width: 100px;
+}
+
+th {
+  background-color: #e6f2fb;
+  color: #003366;
+  font-weight: 600;
+}
+
+td {
+  background-color: #f9fcff;
+}
+
+td:focus {
+  outline: 2px solid #2563eb;
+  background-color: #eef6ff;
+}
+
+/* Info footer */
+.timer-container footer {
+  font-size: 0.85rem;
+  color: #555;
+  margin-top: 10px;
+  font-style: italic;
+}
+
+/* Buttons */
+button {
+  background-color: #2563eb;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background 0.3s ease;
+  font-size: 1rem;
+}
+
+button:hover {
+  background-color: #1e4ed9;
+}
+
+/* Inputs and textarea for reminders */
+input[type="email"],
+textarea {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+/* Fix textarea resizing */
+textarea {
+  resize: none;
+  height: 120px;
+}
+
+/* Email reminder section */
+.email-reminder {
+  margin-top: 40px;
+  background-color: #f0f4ff;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #ccd6f6;
+  text-align: left;
+}
+
+.email-reminder h3 {
+  color: #1E3A8A;
+  margin-bottom: 15px;
+}
+
+.email-reminder label {
+  display: block;
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .timer-container {
+    padding: 10px;
+  }
+
+  table, th, td {
+    font-size: 0.8rem;
+  }
+
+  th, td {
+    padding: 8px;
+  }
+
+  input, textarea {
+    font-size: 0.9rem;
+  }
+
+  button {
+    width: 100%;
+  }
+}
+/* Responsive table wrapper */
+.table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+table {
+  min-width: 700px; /* Ensures the full table remains visible when scrolled */
+}
