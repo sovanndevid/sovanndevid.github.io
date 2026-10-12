@@ -1,0 +1,74 @@
+name: Validate and publish Study Buddy
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/publish-study-buddy.yml'
+      - '.github/study-buddy-smoke.cjs'
+      - '.github/publish-study-buddy.py'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-study-buddy
+  cancel-in-progress: false
+
+jobs:
+  test-and-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Check out portfolio GitHub Pages
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Fetch original Study Buddy source
+        run: |
+          git clone --depth 1 --branch main https://github.com/sovanndevid/Study_Buddy.git study-buddy-source
+          echo "STUDY_BUDDY_SOURCE_SHA=$(git -C study-buddy-source rev-parse HEAD)" >> "$GITHUB_ENV"
+
+      - name: Prepare website under /study-buddy/
+        run: |
+          mkdir -p study-buddy
+          rsync -a --delete --exclude='empty.png' study-buddy-source/sprint6/ study-buddy/
+          test -s study-buddy/index.html
+          test -s study-buddy/js/pomodoro.js
+          test -s study-buddy/html/todolist.html
+          if grep -R -E 'sk-proj-[A-Za-z0-9_-]{30,}' study-buddy/; then
+            echo "Potential API credential found. Blocking release."
+            exit 1
+          fi
+          printf 'Study Buddy from %s\n' "$STUDY_BUDDY_SOURCE_SHA" > study-buddy/BUILD_SOURCE.txt
+
+      - name: Install Playwright
+        run: npm install --no-save playwright@1.56.1
+
+      - name: Browser-test actual staged website
+        run: node .github/study-buddy-smoke.cjs
+
+      - name: Save QA screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: study-buddy-browser-qa
+          path: study-buddy-qa/
+          if-no-files-found: warn
+          retention-days: 7
+
+      - name: Add links to portfolio after tests pass
+        run: python3 .github/publish-study-buddy.py
+
+      - name: Commit tested Study Buddy to Pages
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A study-buddy index.html projects/study-buddy.html sitemap.xml
+          if git diff --cached --quiet; then
+            echo 'Study Buddy is already up to date.'
+          else
+            git commit -m "Publish tested Study Buddy web app on custom domain"
+            git push origin HEAD:main
+          fi
