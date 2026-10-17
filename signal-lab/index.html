@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SignalLab Pro | Live Watch & Paper Trading</title>
+<style>
+:root{color-scheme:dark;--bg:#080c13;--panel:#111825;--panel2:#151f2d;--edge:#273347;--text:#edf5fd;--muted:#9aacbf;--cyan:#53d9c1;--blue:#87a9ff;--amber:#f8c872;--red:#ff868f;--shadow:0 15px 48px #0003}
+*{box-sizing:border-box}body{margin:0;color:var(--text);font:14px/1.5 Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:radial-gradient(ellipse at 5% -8%,#153449 0,transparent 40%),radial-gradient(ellipse at 100% 0%,#202440 0,transparent 33%),var(--bg)}button,input,select{font:inherit}button{cursor:pointer}a{color:var(--blue)}.wrap{max-width:1460px;margin:auto;padding:0 26px 55px}.topbar{border-bottom:1px solid #2a374b;background:#09101bdc;backdrop-filter:blur(12px)}.topinner{max-width:1460px;margin:auto;padding:17px 26px;display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{font-size:17px;font-weight:800;letter-spacing:.03em}.brand .mark{display:inline-block;width:13px;height:13px;transform:rotate(45deg);background:var(--cyan);margin-right:13px;box-shadow:0 0 24px #53d9c165}.topmeta{font-size:12px;color:var(--muted)}h1{font-size:clamp(28px,3vw,44px);letter-spacing:-.05em;margin:0 0 8px;line-height:1.15}h2{font-size:17px;letter-spacing:-.02em;margin:0 0 14px}p{margin:6px 0}.hero{padding:34px 0 26px;display:flex;justify-content:space-between;align-items:end;gap:20px}.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.18em;color:var(--cyan);font-weight:800;margin-bottom:10px}.sub{color:var(--muted);font-size:14px;max-width:750px}.tag{font-size:12px;padding:7px 11px;border:1px solid var(--edge);border-radius:20px;color:var(--muted);white-space:nowrap;background:#121a25}.tag strong{color:var(--cyan)}.notice{padding:13px 16px;border:1px solid #695433;background:#2a241ba6;color:#fbe3ba;border-radius:11px;margin-bottom:22px;font-size:13px}.layout{display:grid;grid-template-columns:285px minmax(0,1fr);gap:20px}.panel{border:1px solid var(--edge);border-radius:15px;background:linear-gradient(156deg,#141f2cd9,#0e1623ef);box-shadow:var(--shadow)}aside.panel{padding:21px;align-self:start;position:sticky;top:14px}.sectionhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:8px}.small{font-size:11px;color:var(--muted)}.ctrl{margin:18px 0}.ctrl label,.fake-label{display:block;font-size:12px;color:#c6d5e4;font-weight:650;margin-bottom:7px}.ctrl select,.ctrl input[type=number]{width:100%;border:1px solid #344056;background:#0a111c;color:#edf5fd;border-radius:9px;padding:10px;outline:0}.ctrl input[type=range]{width:100%;accent-color:#53d9c1}.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.chiprow{display:flex;gap:5px;margin-bottom:11px}.chip{background:#111e2a;border:1px solid #34465b;border-radius:8px;color:#b7c7d5;padding:8px 9px;font-size:12px;flex:1}.chip.active{background:#1a383c;border-color:#3b9385;color:#c5fff1}.btn{background:var(--cyan);border:0;color:#0b211e;font-weight:800;border-radius:9px;padding:10px 14px}.btn.secondary{background:#1b2b3d;color:#e7f3ff;border:1px solid #35495b}.btn.full{width:100%}.hint{color:var(--muted);font-size:11px;line-height:1.55}.sidebarline{height:1px;background:#2b3948;margin:20px 0}.main{min-width:0;display:flex;flex-direction:column;gap:20px}.toolbar{padding:20px 22px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.statline{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.sym{font-size:22px;font-weight:800;letter-spacing:-.025em}.price{font-size:18px;font-weight:750}.statuspill{border:1px solid #554a39;background:#2f281e;border-radius:20px;padding:4px 9px;color:#f1ca85;font-size:11px}.statuspill.good{border-color:#335a51;background:#18342f;color:#9dedd7}.metrics{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}.metric{background:linear-gradient(145deg,#1a2737,#0e1926);border:1px solid var(--edge);border-radius:12px;padding:16px 14px}.metric span{display:block;color:var(--muted);font-size:11px;margin-bottom:10px}.metric strong{font-size:clamp(20px,2vw,27px);letter-spacing:-.045em;font-weight:780}.metric em{display:block;font-size:11px;font-style:normal;color:var(--muted);margin-top:6px}.positive{color:var(--cyan)!important}.negative{color:var(--red)!important}.warn{color:var(--amber)!important}.twocol{display:grid;grid-template-columns:1.35fr 1fr;gap:18px}.chartpanel{padding:22px;min-width:0}.graph{height:270px;width:100%;display:block}.graphshort{height:240px}.minorhead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 13px}.legend{color:var(--muted);font-size:11px}.legend b{color:var(--cyan)}.assessment{padding:22px;display:flex;flex-direction:column;gap:14px}.signal{font-size:24px;font-weight:850;letter-spacing:-.04em}.signal.wait{color:var(--amber)}.signal.long{color:var(--cyan)}.signal.short{color:var(--red)}.textmuted{color:var(--muted)}.blocks{display:grid;grid-template-columns:1fr 1fr;gap:10px}.databox{border:1px solid var(--edge);background:#0b1420;border-radius:10px;padding:12px}.databox span{color:var(--muted);font-size:11px;display:block}.databox b{font-size:17px;display:block;margin-top:5px}.divider{border-top:1px solid var(--edge)}.review{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.review .databox b{font-size:16px}.tablepanel{padding:21px}.tablewrap{overflow:auto;max-width:100%}table{border-collapse:collapse;width:100%;font-size:12px;min-width:690px}th{text-align:left;color:var(--muted);font-weight:650;border-bottom:1px solid var(--edge);padding:11px 10px;white-space:nowrap}td{padding:12px 10px;border-bottom:1px solid #233141;white-space:nowrap;font-variant-numeric:tabular-nums}td strong{font-size:13px}.clickrow{cursor:pointer}.clickrow:hover{background:#1e3040}tr.selected{background:#203c40}th:last-child,td:last-child{text-align:right}.bottom{display:grid;grid-template-columns:1fr 1fr;gap:18px}.info{padding:20px}.info p{color:var(--muted);font-size:12px;line-height:1.7}.inline-action{display:inline-flex;align-items:center;gap:7px}.footer{font-size:11px;color:var(--muted);margin-top:26px;line-height:1.7}.error{color:#ffd3d3;background:#50262d;border:1px solid #803d46;padding:11px 14px;border-radius:9px;display:none}.loading{font-size:12px;color:#bcdfef}.sr{position:absolute;clip:rect(0,0,0,0);height:1px;width:1px;overflow:hidden}.smallpill{font-size:10px;padding:3px 6px;border:1px solid var(--edge);color:var(--muted);border-radius:6px}.badgefail{color:#ff969e}.badgepass{color:#7fe0c8}.kpi-insight{background:#111d2b;border:1px solid #2d3b50;padding:13px;border-radius:9px;font-size:12px}.customfile{font-size:11px;color:var(--muted);margin-top:8px}canvas{touch-action:pan-y}@media(max-width:1100px){.layout{grid-template-columns:245px minmax(0,1fr)}.twocol{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(3,1fr)}}@media(max-width:750px){.wrap,.topinner{padding-left:14px;padding-right:14px}.topmeta{display:none}.hero{display:block}.hero .tag{display:inline-block;margin-top:17px}.layout{display:block}aside.panel{position:static;margin-bottom:18px}.metrics{grid-template-columns:repeat(2,1fr)}.bottom{grid-template-columns:1fr}.toolbar{padding:15px}.chartpanel,.tablepanel{padding:15px}.sym{font-size:19px}.graph{height:200px}}
+
+/* Live trading workbench */
+.live-container{margin:0 0 25px;display:grid;gap:15px}.livehead{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}.livehead h2{font-size:22px;margin:0}.livebar{padding:19px 21px}.live-grid{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:15px}.livepanel{padding:20px;min-width:0}.livepanel h3{margin:0 0 13px;font-size:16px}.livebadge{border:1px solid #34465b;border-radius:7px;padding:4px 8px;font-size:11px;color:var(--muted);display:inline-block}.livebadge.ok{border-color:#286c5b;color:var(--cyan)}.livebadge.warn{border-color:#92703a;color:var(--amber)}.bigquote{font-weight:850;letter-spacing:-.035em;font-size:clamp(24px,2.6vw,38px);font-variant-numeric:tabular-nums}.livemeta{font-size:12px;color:var(--muted);margin-top:4px}.liveflex{display:flex;gap:14px;align-items:center;flex-wrap:wrap}.field{margin:10px 0}.field label{display:block;color:#bdcee1;margin-bottom:6px;font-weight:700;font-size:12px}.field input,.field select{width:100%;background:#0b121e;color:var(--text);border:1px solid #3a4b60;border-radius:9px;padding:10px;min-width:0}.field input:focus,.field select:focus{outline:2px solid #3c9a88}.livebuttons{display:flex;flex-wrap:wrap;gap:8px}.livebuttons button{flex:1}.tradebtn{background:#153e35;border:1px solid #2e8570;color:#aef8de;border-radius:9px;padding:11px;font-weight:800}.tradebtn.short{background:#40282f;border-color:#ad5364;color:#ffd9da}.tradebtn:disabled{filter:grayscale(.8);cursor:not-allowed;opacity:.45}.quietbtn{border:1px solid #35495b;background:#1b2b3d;color:#e7f3ff;padding:9px 12px;border-radius:9px;font-weight:700}.quietbtn:disabled{opacity:.5;cursor:not-allowed}.sigribbon{padding:11px 12px;border:1px solid #33475a;background:#111d2b;color:#c3d7e8;border-radius:10px;margin:10px 0;font-size:12px}.sigribbon.buy{border-color:#277867;color:#b1ffe4}.sigribbon.sell{border-color:#88515b;color:#ffc6c6}.sigribbon.off{border-color:#6f5835;color:#f5d8a8}.accountrow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}.smallmetric{border:1px solid #2e4255;padding:11px;border-radius:10px;background:#0a131f}.smallmetric span{display:block;color:var(--muted);font-size:11px}.smallmetric strong{font-size:20px;font-variant-numeric:tabular-nums}.positionlist{max-height:260px;overflow:auto}.position{padding:11px 0;border-bottom:1px solid #2b3b4b;font-size:12px}.position:last-child{border:0}.livefoot{padding:14px 18px;color:#bbcfe0;font-size:12px}.statusdot{display:inline-block;width:7px;height:7px;background:var(--amber);border-radius:50%;margin-right:5px}.statusdot.connected{background:var(--cyan)}.statusdot.error{background:var(--red)}.live-settings{display:grid;grid-template-columns:1fr 1fr;gap:10px}.live-alert{font-size:12px;padding:8px;border-radius:8px;background:#211d16;border:1px solid #52432a;color:#f7d4a3;margin:8px 0}.live-table{width:100%;border-collapse:collapse;font-size:12px}.live-table td{padding:9px 4px;border-bottom:1px solid #263648}.live-table td:last-child{text-align:right}.footnote{font-size:11px;color:var(--muted);line-height:1.5}.liveconsole{max-width:100%;overflow-wrap:anywhere}.dividerline{height:1px;background:#2b3948;margin:16px 0}.tradelinks a{font-size:12px;margin-right:14px}.liveupload{width:100%;font-size:11px;overflow:hidden}
+@media(max-width:1140px){.live-grid{grid-template-columns:1fr 1fr}.live-grid .livepanel:last-child{grid-column:span 2}}@media(max-width:760px){.live-grid{grid-template-columns:1fr}.live-grid .livepanel:last-child{grid-column:auto}.livepanel{padding:16px}.livebar{padding:16px}.live-settings{grid-template-columns:1fr 1fr}}@media(max-width:420px){.accountrow{grid-template-columns:1fr 1fr}.live-settings{gap:6px}}
+
+</style>
+</head>
+<body>
+<header class="topbar"><div class="topinner"><div class="brand"><span class="mark"></span>SIGNALLAB <span style="font-weight:400;color:#7f94a9">/ trade research terminal</span></div><div class="topmeta">PAPER TRADING • NO BROKER EXECUTION • OCT 2026 RESEARCH BUILD</div></div></header>
+<div class="wrap"><section class="hero"><div><div class="eyebrow">Systematic strategy research</div><h1>Analyze. Alert. Paper trade.</h1><p class="sub">Backtest Gold and Bitcoin. Select strategies on the first 70% of historical candles, then check how they perform on the untouched final 30%. A high win rate is not the same as a profitable system.</p></div><div class="tag">Research goal <strong>≥80% win rate AND positive net returns</strong></div></section>
+<div class="notice"><b>Risk & eligibility:</b> This is a research and browser-only paper trading simulator, not a live-money trading connection or an account at Exness. Exness states it does not accept Australian residents. CFD trading can cause substantial losses. Public data prices are <b>not</b> Exness executable quotes; modeled costs exclude broker-specific swaps, dynamic spreads and all slippage.</div>
+<div id="error" class="error" role="alert"></div>
+<div class="live-container" id="trade-cockpit">
+<section class="panel livebar">
+ <div class="livehead"><div><div class="eyebrow" style="margin-bottom:5px">New in SignalLab · Trading cockpit</div><h2>Live watch & simulation</h2><p class="small">Fresh reference prices, closed-candle signals, browser alerts, and demo trades. <b>No real orders are sent.</b></p></div><div class="liveflex"><span id="liveStatus" class="livebadge">Connecting feed…</span><button id="liveRefresh" class="quietbtn">↻ Refresh now</button><button id="liveNotify" class="quietbtn">Enable alerts</button></div></div>
+</section>
+<div class="live-grid">
+ <section class="panel livepanel">
+  <div class="livehead"><h3>Market monitor</h3><span class="livebadge">Reference, not broker quote</span></div>
+  <div class="live-settings"><div class="field"><label for="liveSymbol">Instrument</label><select id="liveSymbol"><option value="btc">Bitcoin / USD</option><option value="gold">Gold / XAUUSD</option></select></div><div class="field"><label for="liveTF">Signal candle</label><select id="liveTF"><option value="60">1 hour</option><option value="240" selected>4 hours</option><option value="1440">1 day</option></select></div></div>
+  <div id="livePrice" class="bigquote">—</div><div id="livePriceTime" class="livemeta">Awaiting quote…</div>
+  <div id="liveFeedNote" class="livemeta">BTC: Kraken public USD quotes. Gold: third-party reference spot feed.</div>
+  <div class="dividerline"></div><div class="livehead"><b>Completed candle scan</b><span id="liveCandleStatus" class="livebadge">Not evaluated</span></div>
+  <div id="liveSignal" class="sigribbon">Fetching OHLC candles…</div><p id="liveSignalMeta" class="footnote">The system never extrapolates unfinished candles into a confirmed strategy signal.</p>
+  <div class="livebuttons" style="margin-top:12px"><button id="copySignal" class="quietbtn" disabled>Load signal levels</button><button id="liveExportTicket" class="quietbtn">Copy order ticket</button></div>
+  <div class="dividerline"></div><div class="field"><label for="brokerCandles">Gold broker OHLC CSV (enables gold candle analysis only if fresh)</label><input class="liveupload" id="brokerCandles" type="file" accept=".csv,.tsv,.txt"></div>
+  <p class="footnote">Gold's reference price is not executable; no broker spread/stop level information is supplied. Browser polling every 45 seconds only while the tab is running. Gold may be closed on weekends.</p>
+ </section>
+ <section class="panel livepanel">
+  <div class="livehead"><h3>Paper order ticket</h3><span class="livebadge warn">DEMO ONLY</span></div>
+  <div class="live-settings"><div class="field"><label for="paperStop">Stop loss (USD price)</label><input id="paperStop" type="number" min="0" step="any" placeholder="Required"></div><div class="field"><label for="paperTarget">Take profit (USD price)</label><input id="paperTarget" type="number" min="0" step="any" placeholder="Required"></div></div>
+  <div class="live-settings"><div class="field"><label for="paperRisk">Max equity risk per trade</label><select id="paperRisk"><option value="0.25">0.25%</option><option value="0.5" selected>0.50%</option><option value="1">1.00%</option></select></div><div class="field"><label for="paperCost">Extra round-trip cost (bps)</label><input id="paperCost" type="number" min="0" max="500" value="20" step="1"></div></div>
+  <div id="paperSizing" class="sigribbon">Risk sizing calculates after a valid quote and stop price. Position notional capped at 1× demo equity.</div>
+  <div class="livebuttons"><button class="tradebtn" id="paperBuy" disabled>Simulate BUY</button><button class="tradebtn short" id="paperSell" disabled>Simulate SELL</button></div>
+  <div id="paperAction" role="status" class="livemeta">Paper orders stay in this browser. A request is never sent to an exchange or broker.</div>
+  <div class="dividerline"></div><h3 style="margin-bottom:4px">Order handoff</h3><p class="footnote">Use the copied ticket to enter an order manually in your eligible broker's terminal. Check the <b>actual broker bid/ask, symbol suffix, volume lot step and contract size</b>. This tool never knows your MT5 balance or permitted lot size.</p>
+  <div class="tradelinks"><a href="https://www.metatrader5.com/en/download" target="_blank" rel="noreferrer">MetaTrader 5 ↗</a><a href="https://moneysmart.gov.au/complex-investment-products/contracts-for-difference-cfds" target="_blank" rel="noreferrer">ASIC CFD risks ↗</a></div>
+ </section>
+ <section class="panel livepanel">
+  <div class="livehead"><h3>Demo portfolio</h3><span class="livebadge">Saved on this device</span></div>
+  <div class="accountrow"><div class="smallmetric"><span>Demo balance</span><strong id="paperBalance">$1,000.00</strong></div><div class="smallmetric"><span>Open positions</span><strong id="paperCount">0</strong></div></div>
+  <div class="accountrow"><div class="smallmetric"><span>Closed P&L</span><strong id="paperPL">$0.00</strong></div><div class="smallmetric"><span>Closed win rate</span><strong id="paperWR">—</strong></div></div>
+  <div class="livehead" style="margin:14px 0 7px"><b>Open paper trades</b><button id="paperReset" class="quietbtn">Reset demo</button></div><div id="paperPositions" class="positionlist"><p class="footnote">No open positions.</p></div>
+  <div class="livehead" style="margin:16px 0 8px"><b>Recent closed trades</b><button id="paperExport" class="quietbtn">Export CSV</button></div><div id="paperHistory" class="positionlist"><p class="footnote">Closed trades appear here.</p></div>
+ </section>
+</div>
+<section class="panel livefoot"><b>Important:</b> Alerts are informational. BTC market data is sourced from Kraken and can differ from an Exness/MT5 CFD quote. Gold reference spot has no broker candle stream until you import one. Alerts and auto-close of paper trades only work while this page remains active and connected; no positions or stops are protected by a broker. An 80% historical hit rate did <b>not</b> establish a profitable strategy.</section>
+</div>
+<div class="layout"><aside class="panel"><div class="sectionhead"><h2 style="margin:0">Research settings</h2><span class="smallpill">v1.0</span></div>
+<div class="fake-label">Market / dataset</div><div class="chiprow"><button class="chip active" data-feed="btc">BTC · 1D</button><button class="chip" data-feed="gold">Gold · 1D</button><button class="chip" data-feed="goldh">Gold · 1H</button></div>
+<div class="ctrl"><label for="mode">Strategy selection</label><select id="mode"><option value="expectancy">Best training average R</option><option value="winrate">Highest training win rate</option><option value="manual">Manual strategy & exits</option></select></div>
+<div class="ctrl"><label for="strategy">Strategy</label><select id="strategy"><option value="breakout">20-bar breakout + trend</option><option value="trend_pullback">EMA trend + RSI pullback</option><option value="rsi_fade">EMA trend + RSI fade</option><option value="bollinger">Bollinger + RSI mean reversion</option><option value="ema_cross">20/50 EMA crossover + trend</option></select></div>
+<div class="row2"><div class="ctrl"><label for="tp">Take profit (ATR)</label><input type="number" id="tp" min="0.1" max="10" step="0.05" value="1.5"></div><div class="ctrl"><label for="sl">Stop loss (ATR)</label><input type="number" id="sl" min="0.1" max="10" step="0.05" value="1"></div></div>
+<div class="row2"><div class="ctrl"><label for="hold">Max hold (bars)</label><input type="number" id="hold" min="1" max="200" step="1" value="12"></div><div class="ctrl"><label for="fee">Round-trip costs (bps)</label><input type="number" id="fee" min="0" max="1000" step="1" value="20"></div></div>
+<div class="ctrl"><label for="risk">Illustrative account risk per trade: <b id="risklabel">1.0%</b></label><input id="risk" type="range" min="0.1" max="2" step="0.1" value="1"><div class="hint">Used only to illustrate compounding and drawdown. This does not model broker contract sizing.</div></div>
+<button class="btn full" id="run">Run historical analysis ↗</button><div class="sidebarline"></div>
+<div class="ctrl"><label for="csv">Import broker / MT5 candle CSV</label><input id="csv" type="file" accept=".csv,.txt,.tsv"><p class="hint">Accepts Date, Open, High, Low, Close; comma, semicolon or tab-separated MT5 exports. Uploaded candles replace the selected market dataset in this browser.</p><div class="customfile" id="uploadname"></div></div>
+<button class="btn secondary full" id="reset">Restore public data</button><p class="hint" style="margin-top:17px">Price histories are fetched from public GitHub repositories when you open or reload this file. No login or API key is needed. If fetching fails, import a CSV instead.</p>
+</aside><main class="main">
+<section class="panel toolbar"><div><div class="statline"><span class="sym" id="asset">BTCUSD · proxy</span><span class="price" id="lastprice">—</span><span class="statuspill" id="freshness">Loading data</span></div><div class="small" id="datarange" style="margin-top:9px">Data source and timestamps loading…</div></div><div class="statline"><span class="small">70% TRAIN / 30% OOS</span><button id="export" class="btn secondary">Export holdout trades ↓</button></div></section>
+<div class="metrics"><div class="metric"><span>Out-of-sample win rate</span><strong id="win">—</strong><em id="winhint">Closed profitable trades / all trades</em></div><div class="metric"><span>Out-of-sample net result</span><strong id="net">—</strong><em>Risk units (R), after cost assumption</em></div><div class="metric"><span>Profit factor</span><strong id="pf">—</strong><em id="pfhint">Gross winners ÷ gross losers</em></div><div class="metric"><span>Out-of-sample trades</span><strong id="trades">—</strong><em id="confidence">Minimum 30 recommended</em></div><div class="metric"><span>Illustrative max drawdown</span><strong id="dd">—</strong><em id="ddhint">With selected per-trade risk</em></div></div>
+<div class="twocol"><div class="panel chartpanel"><div class="minorhead"><h2>Historical price <span class="small">/ last 260 bars</span></h2><div class="legend"><b>━</b> Close &nbsp; <span style="color:var(--blue)">━</span> EMA 50</div></div><canvas class="graph" id="pricechart" aria-label="Historical closing price chart"></canvas><p class="small" id="chartnotes">Non-live indicative prices. Use fresh broker data before considering any transaction.</p></div>
+<div class="panel assessment"><div class="minorhead"><h2>Last-bar setup check</h2><span class="smallpill">NOT AN ORDER</span></div><div class="signal wait" id="signal">Loading…</div><p class="textmuted" style="font-size:12px" id="signaldesc">Setup is based on the last available closed candle only.</p><div class="blocks"><div class="databox"><span>Illustrative stop level</span><b id="stop">—</b></div><div class="databox"><span>Illustrative target level</span><b id="target">—</b></div></div><div class="divider"></div><div class="small">Research quality gate</div><div class="kpi-insight" id="verdict">Evaluating untouched holdout…</div><div class="small">A setup never means “buy now.” The system tests entry at the <b>next bar's open</b>, which cannot be known in advance.</div></div></div>
+<div class="twocol"><div class="panel chartpanel"><div class="minorhead"><h2>Out-of-sample cumulative R</h2><span class="small" id="equitysubtitle">After modeled round-trip costs</span></div><canvas class="graph graphshort" id="equitychart" aria-label="Cumulative R per trade chart"></canvas><div class="review"><div class="databox"><span>Train win rate</span><b id="trainwin">—</b></div><div class="databox"><span>Train average R</span><b id="trainavg">—</b></div><div class="databox"><span>Holdout average R</span><b id="testavg">—</b></div></div></div>
+<div class="panel chartpanel"><div class="minorhead"><h2>Model selection</h2><span class="smallpill" id="selectionmode">TRAINING ONLY</span></div><p class="small" id="selectedtext">Searching 25 combinations on training data.</p><div class="divider" style="margin:13px 0"></div><div class="minorhead"><h2 style="font-size:14px;margin:0">High win-rate reality check</h2><span class="small">Untouched holdout</span></div><div class="blocks"><div class="databox"><span>Win rate, high-hit candidate</span><b id="highwinrate">—</b></div><div class="databox"><span>Net R, same candidate</span><b id="highnet">—</b></div></div><p class="hint" id="highdescription" style="margin-top:8px">High-win candidate is chosen using only training win rate, not holdout outcome.</p><p class="hint" style="margin-top:auto">Trading strategy tests use the same-bar conservative assumption: if stop and target are both inside a candle's range, the stop fills first. Holding costs, dividends and varying spread are not simulated.</p></div></div>
+<section class="panel tablepanel"><div class="minorhead"><h2 style="margin:0">Strategy leaderboard <span class="small">/ ranked on training performance only</span></h2><span class="small">Click a row to inspect it (manual mode)</span></div><div class="tablewrap"><table><thead><tr><th>Strategy</th><th>TP / SL / hold</th><th>Train trades</th><th>Train win %</th><th>Train avg R</th><th>Test trades</th><th>Test win %</th><th>Test net R</th></tr></thead><tbody id="leaderboard"><tr><td colspan="8">Loading research results…</td></tr></tbody></table></div></section>
+<section class="panel tablepanel"><div class="minorhead"><h2 style="margin:0">Closed trades <span class="small">/ holdout, last 25 shown</span></h2><span class="small" id="splitlabel">—</span></div><div class="tablewrap"><table><thead><tr><th>Entry candle</th><th>Exit candle</th><th>Direction</th><th>Entry</th><th>Exit</th><th>Exit reason</th><th>Net result</th></tr></thead><tbody id="tradetable"><tr><td colspan="7">Waiting for data…</td></tr></tbody></table></div></section>
+<div class="bottom"><div class="panel info"><h2>How the test works</h2><p>1. Compute indicators only from the current and earlier finished candles. 2. Enter a single position on the next bar's open. 3. Use ATR stop/target; include a user-adjustable round-trip cost. 4. Exit at the first stop, target, or time limit. 5. Choose a parameter combination using only the first 70% of price history, then evaluate it on the last 30% without re-optimizing. 6. Treat a small sample or stale data as inconclusive.</p><p>No simultaneous positions. Gaps can fill worse than stop level. This simplified research engine is not a substitute for broker tick-level validation, exchange session calendars or walk-forward testing.</p></div><div class="panel info"><h2>Data, methodology & safety</h2><p><a href="https://github.com/jptrustlearning/btc" target="_blank" rel="noopener">BTC public historical OHLC</a> (may mix Binance and Yahoo feeds) · <a href="https://github.com/FeziweMelvin/XAUUSD-Gold-Price" target="_blank" rel="noopener">Gold daily OHLC</a> (ends June 2025) · <a href="https://github.com/getdata-finance/xauusd-1h-ohlcv-metals-historical-data" target="_blank" rel="noopener">Gold hourly sample</a> (through September 2026).</p><p><a href="https://get.exness.help/hc/en-us/articles/16719521110044-Country-restrictions-for-Exness-services" target="_blank" rel="noopener">Exness country restrictions</a> · <a href="https://moneysmart.gov.au/complex-investment-products/contracts-for-difference-cfds" target="_blank" rel="noopener">ASIC Moneysmart: CFDs</a>. For Australian residents, verify that a CFD provider has the required Australian financial services licence. Neither a backtest nor a high win percentage guarantees future profitability.</p></div></div>
+</main></div><footer class="footer">SIGNALLAB TRADE RESEARCH + PAPER EDITION • Updated 17 October 2026 • USD-quoted instruments where applicable • Times interpreted in the original feed's timezone • Nothing in this file sends or places a trade • Results are illustrative, not investment advice.</footer></div>
+<script id="engine">
+"use strict";
+const FEEDS={
+ btc:{name:"BTCUSD · proxy",url:"https://raw.githubusercontent.com/jptrustlearning/btc/main/btc_prices.csv",type:"btc",fee:20,label:"BTC · daily OHLC, public mixed-source feed"},
+ gold:{name:"XAUUSD · Gold",url:"https://raw.githubusercontent.com/FeziweMelvin/XAUUSD-Gold-Price/main/XAU_1d_data.csv",type:"gold",fee:8,label:"Gold · daily OHLC, historical feed ending June 2025"},
+ goldh:{name:"XAUUSD · Gold",url:"https://raw.githubusercontent.com/getdata-finance/xauusd-1h-ohlcv-metals-historical-data/main/XAUUSD_1h.csv",type:"hourly",fee:8,label:"Gold · 1-hour OHLC public sample through September 2026"}
+};
+const STRATEGIES={breakout:"20-bar breakout + trend",trend_pullback:"EMA trend + RSI pullback",rsi_fade:"EMA trend + RSI fade",bollinger:"Bollinger + RSI mean reversion",ema_cross:"20/50 EMA crossover + trend"};
+const PAYOUTS=[[.6,1.4,8],[1,1.5,12],[1.5,1,12],[.35,1.8,8],[1,1,6]];
+function parseCSV(content,type){
+ const lines=content.trim().replace(/^\uFEFF/,"").split(/\r?\n/);if(lines.length<3)throw Error("CSV has too few rows");
+ const head=lines[0];let sep=head.includes("\t")?"\t":head.includes(";")?";":",";
+ const parts=head.split(sep).map(v=>v.trim().replace(/^[<\"]+|[>\"]+$/g,"").toLowerCase());
+ const col=(opts,fallback)=>{for(let i=0;i<parts.length;i++)if(opts.includes(parts[i]))return i;return fallback};
+ const iDate=col(["date","datetime","timestamp","time","วันที่"],0),iTime=parts.indexOf("time"),iOpen=col(["open","ราคาเปิด"],1),iHigh=col(["high","ราคาสูงสุด"],2),iLow=col(["low","ราคาต่ำสุด"],3),iClose=col(["close","ราคาปิด"],4);
+ const rows=[];
+ for(let k=1;k<lines.length;k++){
+  let p=lines[k].split(sep);if(p.length<5)continue;let d=(p[iDate]||"").trim().replace(/^\"|\"$/g,"");if(!d)continue;
+  if(iTime>=0 && iDate!==iTime && !d.includes(" ") && !d.includes("T"))d+=" "+(p[iTime]||"").trim();
+  const o=Number(p[iOpen]),h=Number(p[iHigh]),l=Number(p[iLow]),c=Number(p[iClose]);
+  if(![o,h,l,c].every(Number.isFinite)||Math.min(o,l,c)<=0||h<Math.max(o,c)||l>Math.min(o,c)||h<l)continue;
+  rows.push({d,o,h,l,c});
+ }
+ rows.sort((a,b)=>a.d.localeCompare(b.d));let dedup=[];for(const a of rows){if(dedup.length && dedup.at(-1).d===a.d)dedup[dedup.length-1]=a;else dedup.push(a)}
+ if(dedup.length<260)throw Error("Need at least 260 valid candles; got "+dedup.length);
+ return dedup;
+}
+function ema(v,n){const out=new Array(v.length).fill(NaN),k=2/(n+1);let sum=0;for(let i=0;i<v.length;i++){if(i<n){sum+=v[i];if(i===n-1)out[i]=sum/n}else out[i]=v[i]*k+out[i-1]*(1-k)}return out}
+function indicators(a){
+ const n=a.length,c=a.map(x=>x.c),hi=a.map(x=>x.h),lo=a.map(x=>x.l),e20=ema(c,20),e50=ema(c,50),e200=ema(c,200),rsi=Array(n).fill(NaN),atr=Array(n).fill(NaN),upper=Array(n).fill(NaN),lower=Array(n).fill(NaN),prevhi=Array(n).fill(NaN),prevlo=Array(n).fill(NaN);
+ let ag=0,al=0,aa=0;for(let i=1;i<n;i++){
+  const gain=Math.max(0,c[i]-c[i-1]),loss=Math.max(0,c[i-1]-c[i]);const tr=Math.max(hi[i]-lo[i],Math.abs(hi[i]-c[i-1]),Math.abs(lo[i]-c[i-1]));
+  if(i<=14){ag+=gain;al+=loss;aa+=tr;if(i===14){ag/=14;al/=14;aa/=14}}
+  else{ag=(ag*13+gain)/14;al=(al*13+loss)/14;aa=(aa*13+tr)/14}
+  if(i>=14){rsi[i]=al===0?100:100-100/(1+ag/al);atr[i]=aa}
+ }
+ for(let i=20;i<n;i++){const p=c.slice(i-19,i+1),m=p.reduce((z,v)=>z+v,0)/20,sd=Math.sqrt(p.reduce((z,v)=>z+(v-m)**2,0)/20);upper[i]=m+2*sd;lower[i]=m-2*sd;prevhi[i]=Math.max(...hi.slice(i-20,i));prevlo[i]=Math.min(...lo.slice(i-20,i))}
+ return {e20,e50,e200,rsi,atr,upper,lower,prevhi,prevlo};
+}
+function signal(a,x,i,str){
+ if(i<201||!Number.isFinite(x.e200[i])||!Number.isFinite(x.atr[i]))return 0;
+ const C=a[i].c,E=x.e50[i],E2=x.e200[i],r=x.rsi[i];
+ if(str==="trend_pullback"){if(E>E2&&C>E2&&r<45&&r>30&&C<x.e20[i])return 1;if(E<E2&&C<E2&&r>55&&r<70&&C>x.e20[i])return -1}
+ if(str==="breakout"){if(E>E2&&C>x.prevhi[i])return 1;if(E<E2&&C<x.prevlo[i])return -1}
+ if(str==="bollinger"){if(C<x.lower[i]&&r<35)return 1;if(C>x.upper[i]&&r>65)return -1}
+ if(str==="rsi_fade"){if(E>E2&&r<40)return 1;if(E<E2&&r>60)return -1}
+ if(str==="ema_cross"){if(i>1&&x.e20[i]>E&&x.e20[i-1]<=x.e50[i-1]&&E>E2)return 1;if(i>1&&x.e20[i]<E&&x.e20[i-1]>=x.e50[i-1]&&E<E2)return -1}
+ return 0;
+}
+function backtest(a,x,str,tpMult,slMult,maxHold,fee,from,to){
+ const trades=[],feeFrac=fee/10000;let i=Math.max(202,from);
+ while(i<=to&&i<a.length){
+  const dir=signal(a,x,i-1,str);if(!dir){i++;continue}
+  const entry=a[i].o,atr=x.atr[i-1];if(!entry||!atr){i++;continue}
+  const dist=atr*slMult,tp=entry+dir*atr*tpMult,sl=entry-dir*dist;let exit=null,reason="",exitI=i;
+  for(let j=i;j<=to&&j<i+maxHold;j++){
+   const bar=a[j];if(dir===1){if(bar.o<=sl){exit=bar.o;reason="gapSL"}else if(bar.o>=tp){exit=bar.o;reason="gapTP"}else if(bar.l<=sl){exit=sl;reason="SL"}else if(bar.h>=tp){exit=tp;reason="TP"}}
+   else{if(bar.o>=sl){exit=bar.o;reason="gapSL"}else if(bar.o<=tp){exit=bar.o;reason="gapTP"}else if(bar.h>=sl){exit=sl;reason="SL"}else if(bar.l<=tp){exit=tp;reason="TP"}}
+   if(exit!==null){exitI=j;break}
+   if(j===Math.min(to,i+maxHold-1)){exit=bar.c;exitI=j;reason="time"}
+  }
+  if(exit===null)break;
+  const R=(dir*(exit-entry)-entry*feeFrac)/dist;
+  trades.push({d:a[i].d,end:a[exitI].d,dir,entry,exit,R,reason});
+  i=exitI+1;
+ }
+ let wins=0,net=0,gw=0,gl=0,peak=0,dd=0,e=0;
+ for(const t of trades){net+=t.R;if(t.R>0){wins++;gw+=t.R}else gl-=t.R;e+=t.R;peak=Math.max(peak,e);dd=Math.min(dd,e-peak)}
+ return {n:trades.length,w:wins,wr:trades.length?100*wins/trades.length:0,netR:net,avgR:trades.length?net/trades.length:0,pf:gl?gw/gl:(gw?Infinity:null),ddR:dd,trades};
+}
+function research(a,x,fee){
+ const split=Math.floor(a.length*.7),setups=[];
+ for(const str of Object.keys(STRATEGIES))for(const [tp,sl,hold] of PAYOUTS){const tr=backtest(a,x,str,tp,sl,hold,fee,202,split-1);setups.push({str,tp,sl,hold,tr})}
+ const eligible=setups.filter(q=>q.tr.n>=15);const sortByAvg=(a,b)=>b.tr.avgR-a.tr.avgR;
+ const expectancy=(eligible.length?eligible:setups).slice().sort(sortByAvg)[0];
+ const winrate=(eligible.length?eligible:setups).slice().sort((a,b)=>b.tr.wr-a.tr.wr||sortByAvg(a,b))[0];
+ return {split,setups,expectancy,winrate};
+}
+function compound(trades,risk){let eq=1,peak=1,drawdown=0;const pts=[0];for(const t of trades){eq*=Math.max(.0001,1+t.R*risk/100);peak=Math.max(peak,eq);drawdown=Math.min(drawdown,(eq/peak-1)*100);pts.push((eq-1)*100)}return {equityPct:(eq-1)*100,drawdownPct:drawdown,equity:pts}}
+function dateMillis(d){let s=d.trim();if(/^\d{4}\.\d\d\.\d\d/.test(s))s=s.replace(/^(\d{4})\.(\d\d)\.(\d\d) (.*)$/,'$1-$2-$3T$4Z');else if(/^\d{4}-\d\d-\d\d$/.test(s))s+='T23:59:59Z';else if(/^\d{4}-\d\d-\d\d /.test(s))s=s.replace(' ','T')+'Z';return new Date(s).getTime()}
+// Test API exposed to Node-based unit tests; harmless in the browser.
+if(typeof module!=="undefined"&&module.exports)module.exports={FEEDS,STRATEGIES,PAYOUTS,parseCSV,ema,indicators,signal,backtest,research,compound,dateMillis};
+</script>
+<script id="ui">
+"use strict";
+const $=id=>document.getElementById(id);const state={market:"btc",datasets:{},custom:{},running:false,series:null,ind:null,last:null};
+const fmt=(n,k=2)=>Number.isFinite(n)?Number(n).toLocaleString("en-US",{minimumFractionDigits:k,maximumFractionDigits:k}):"—";
+const signed=(n,k=2)=>Number.isFinite(n)?(n>0?"+":"")+fmt(n,k):"—";
+const esc=s=>String(s).replace(/[&<>\"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+function showError(msg){$('error').textContent=msg;$('error').style.display="block"}function clearError(){$('error').style.display="none"}
+function controls(){return{mode:$('mode').value,str:$('strategy').value,tp:+$('tp').value,sl:+$('sl').value,hold:+$('hold').value,fee:+$('fee').value,risk:+$('risk').value}}
+async function loadMarket(m){state.market=m;document.querySelectorAll('.chip').forEach(b=>b.classList.toggle('active',b.dataset.feed===m));$('asset').textContent=FEEDS[m].name;clearError();$('freshness').textContent="Loading…";
+ if(!state.custom[m]&&!state.datasets[m]){try{const r=await fetch(FEEDS[m].url,{cache:"no-store"});if(!r.ok)throw Error("HTTP "+r.status);const t=await r.text();state.datasets[m]=parseCSV(t,FEEDS[m].type)}catch(err){showError("Could not load public candle data: "+err.message+". Download the CSV from the listed source and import it with the file picker.");$('freshness').textContent="CSV needed";return}}
+ $('fee').value=FEEDS[m].fee;await runAnalysis();}
+async function runAnalysis(){
+ clearError();const m=state.market,a=state.custom[m]||state.datasets[m];if(!a){showError('No candles loaded; import a CSV.');return}
+ let settings=controls();if(!Number.isFinite(settings.tp)||settings.tp<=0||!Number.isFinite(settings.sl)||settings.sl<=0||!Number.isFinite(settings.fee)||settings.fee<0||!Number.isInteger(settings.hold)||settings.hold<1){showError("Check TP, SL, costs and max holding period. They must be positive (cost can be zero).");return}
+ $('run').disabled=true;$('run').textContent='Analyzing…';
+ try{
+  // Yield to painting while keeping entire analytical implementation client-side.
+  await new Promise(resolve=>setTimeout(resolve,0));const x=indicators(a),r=research(a,x,settings.fee);let selected;
+  if(settings.mode==='manual'){selected={str:settings.str,tp:settings.tp,sl:settings.sl,hold:settings.hold,tr:backtest(a,x,settings.str,settings.tp,settings.sl,settings.hold,settings.fee,202,r.split-1)}}
+  else selected=r[settings.mode];
+  const oos=backtest(a,x,selected.str,selected.tp,selected.sl,selected.hold,settings.fee,r.split,a.length-1);const cg=compound(oos.trades,settings.risk);
+  Object.assign(state,{series:a,ind:x,last:{selected,oos,r,settings,cg}});
+  if(settings.mode!=='manual'){$('strategy').value=selected.str;$('tp').value=selected.tp;$('sl').value=selected.sl;$('hold').value=selected.hold}
+  render();
+ }catch(e){showError("Could not complete analysis: "+e.message);console.error(e)}
+ finally{$('run').disabled=false;$('run').textContent='Run historical analysis ↗'}
+}
+function render(){const {series:a,ind:x,last:{selected,oos,r,settings,cg}}=state;const n=a.length,feed=FEEDS[state.market];
+ $('asset').textContent=feed.name;$('lastprice').textContent='$'+fmt(a.at(-1).c);const until=a.at(-1).d;const delta=Date.now()-dateMillis(until);const maxAge=state.market==='btc'?2.5*864e5:4*864e5;const stale=!Number.isFinite(delta)||delta>maxAge;
+ $('freshness').textContent=stale?'STALE RESEARCH FEED':'Recent, not live';$('freshness').className='statuspill'+(stale?'':' good');
+ $('datarange').textContent=fmt(n,0)+' bars · '+a[0].d+' → '+until+' · '+(state.custom[state.market]?'your imported broker CSV':feed.label);
+ $('splitlabel').textContent='Holdout from '+a[r.split].d;
+ setMetric('win',fmt(oos.wr,1)+'%',oos.wr>=80?'positive':'');setMetric('net',signed(oos.netR)+' R',oos.netR>0?'positive':oos.netR<0?'negative':'');setMetric('pf',oos.pf===Infinity?'∞':fmt(oos.pf),oos.pf>=1.1?'positive':oos.pf<1?'negative':'');setMetric('trades',fmt(oos.n,0),oos.n<30?'warn':'');setMetric('dd',fmt(cg.drawdownPct,1)+'%',cg.drawdownPct< -10?'negative':'');
+ $('confidence').textContent=oos.n<30?'Too few trades for confidence':oos.n+' holdout trades';$('risklabel').textContent=fmt(settings.risk,1)+'%';
+ $('trainwin').textContent=fmt(selected.tr.wr,1)+'%';$('trainavg').textContent=signed(selected.tr.avgR,3)+' R';$('testavg').textContent=signed(oos.avgR,3)+' R';
+ $('selectedtext').textContent=STRATEGIES[selected.str]+' · target '+selected.tp+' ATR · stop '+selected.sl+' ATR · max '+selected.hold+' bars. Train: '+selected.tr.n+' trades, '+signed(selected.tr.netR)+' R. '+(settings.mode==='manual'?'Manually selected.':'Selected using training data only.');
+ $('selectionmode').textContent=settings.mode==='manual'?'MANUAL':settings.mode==='winrate'?'HIGHEST TRAIN HIT RATE':'TRAIN AVERAGE R';
+ const q=r.winrate,qt=backtest(a,x,q.str,q.tp,q.sl,q.hold,settings.fee,r.split,n-1);$('highwinrate').textContent=fmt(qt.wr,1)+'%';setMetric('highnet',signed(qt.netR)+' R',qt.netR>0?'positive':'negative');
+ $('highdescription').textContent=STRATEGIES[q.str]+' / TP '+q.tp+' ATR / SL '+q.sl+' ATR. '+qt.n+' holdout trades. Training win rate '+fmt(q.tr.wr,1)+'%. This is not selected on holdout results.';
+ const quality=oos.n>=30&&oos.netR>0&&oos.pf>=1.1&&oos.avgR>0;
+ let msg=!oos.n?'No holdout trades. Not ready for live trading.':quality?'Passes preliminary numerical screening on the historical holdout; still NOT validated for live execution.':oos.n<30?'Insufficient holdout sample (<30 trades). Do not infer reliability.':oos.wr>=80&&oos.netR<=0?'HIGH HIT RATE, NEGATIVE RESULT. Do not mistake frequent wins for a profitable edge.':'Does not pass the profitability and sample-size checks. Further independent testing required.';
+ if(stale)msg+=' Data is stale and cannot establish a current executable signal.';$('verdict').textContent=msg;
+ const s=signal(a,x,n-1,selected.str),signalEl=$('signal');signalEl.className='signal '+(s===1?'long':s===-1?'short':'wait');signalEl.textContent=s===1?'POTENTIAL LONG SETUP':s===-1?'POTENTIAL SHORT SETUP':'WAIT — NO NEW SETUP';
+ if(s){const last=a.at(-1).c,ATR=x.atr.at(-1);$('stop').textContent='$'+fmt(last-s*ATR*selected.sl);$('target').textContent='$'+fmt(last+s*ATR*selected.tp)}else{$('stop').textContent='—';$('target').textContent='—'}
+ $('signaldesc').textContent=(s?'The last archived completed candle meets the '+STRATEGIES[selected.str]+' rules. Levels are only hypothetical from its close.':'The last archived candle does not meet the selected entry conditions.')+' Last candle: '+until+'. '+(stale?'Historical feed is outdated.':'No real-time broker bid/ask is supplied.');
+ const sorted=r.setups.slice().sort((p,q)=>q.tr.avgR-p.tr.avgR);$('leaderboard').innerHTML=sorted.slice(0,10).map(t=>{const z=backtest(a,x,t.str,t.tp,t.sl,t.hold,settings.fee,r.split,n-1);const chosen=t.str===selected.str&&t.tp===selected.tp&&t.sl===selected.sl&&t.hold===selected.hold;return `<tr class="clickrow ${chosen?'selected':''}" data-str="${t.str}" data-tp="${t.tp}" data-sl="${t.sl}" data-hold="${t.hold}"><td><strong>${STRATEGIES[t.str]}</strong></td><td>${t.tp} / ${t.sl} / ${t.hold}</td><td>${t.tr.n}</td><td>${fmt(t.tr.wr,1)}%</td><td class="${t.tr.avgR<0?'negative':'positive'}">${signed(t.tr.avgR,3)}</td><td>${z.n}</td><td>${fmt(z.wr,1)}%</td><td class="${z.netR<0?'negative':'positive'}">${signed(z.netR)}</td></tr>`}).join('');
+ document.querySelectorAll('.clickrow').forEach(el=>el.addEventListener('click',()=>{$('mode').value='manual';$('strategy').value=el.dataset.str;$('tp').value=el.dataset.tp;$('sl').value=el.dataset.sl;$('hold').value=el.dataset.hold;runAnalysis()}));
+ $('tradetable').innerHTML=oos.trades.slice(-25).reverse().map(t=>`<tr><td>${esc(t.d)}</td><td>${esc(t.end)}</td><td>${t.dir===1?'LONG':'SHORT'}</td><td>${fmt(t.entry)}</td><td>${fmt(t.exit)}</td><td>${t.reason}</td><td class="${t.R>0?'positive':'negative'}">${signed(t.R,3)} R</td></tr>`).join('')||'<tr><td colspan="7">No trades within the holdout period.</td></tr>';
+ drawAllCharts();
+}
+function setMetric(id,value,style=''){const el=$(id);el.textContent=value;el.className=style}
+function plot(canvas,data,overlay){
+ const ratio=window.devicePixelRatio||1,box=canvas.getBoundingClientRect(),W=Math.max(250,box.width),H=Math.max(180,box.height);canvas.width=Math.round(W*ratio);canvas.height=Math.round(H*ratio);const g=canvas.getContext('2d');g.scale(ratio,ratio);g.clearRect(0,0,W,H);
+ const arr=data.filter(Number.isFinite),arr2=(overlay||[]).filter(Number.isFinite);if(!arr.length){g.fillStyle='#8ba0b6';g.fillText('Not enough data',W/2-35,H/2);return}
+ let min=Math.min(...arr,...arr2),max=Math.max(...arr,...arr2);if(max===min){max+=1;min-=1}const pad=(max-min)*.10;max+=pad;min-=pad;
+ const ml=55,mr=10,mt=12,mb=30,w=W-ml-mr,h=H-mt-mb;const Y=v=>mt+h-(v-min)/(max-min)*h;const X=i=>ml+i/Math.max(1,data.length-1)*w;
+ g.lineWidth=1;g.font='11px Inter, system-ui';g.textAlign='right';for(let i=0;i<5;i++){const v=min+(max-min)*i/4,y=Y(v);g.strokeStyle='#253548';g.beginPath();g.moveTo(ml,y);g.lineTo(W-mr,y);g.stroke();g.fillStyle='#8497ab';g.fillText(Math.abs(v)>1000?Math.round(v).toLocaleString('en-US'):fmt(v,1),ml-9,y+4)}
+ function line(vals,color,fill=false){g.beginPath();let started=false;for(let i=0;i<vals.length;i++){const v=vals[i];if(!Number.isFinite(v)){started=false;continue}if(!started){g.moveTo(X(i),Y(v));started=true}else g.lineTo(X(i),Y(v))}if(fill){const gg=g.createLinearGradient(0,mt,0,H);gg.addColorStop(0,'#43ddbd30');gg.addColorStop(1,'#43ddbd00');const last=X(vals.length-1);g.lineTo(last,mt+h);g.lineTo(ml,mt+h);g.closePath();g.fillStyle=gg;g.fill()}g.lineWidth=2;g.strokeStyle=color;g.stroke()}
+ if(overlay)line(overlay,'#87a9ff');line(data,'#53d9c1',true);
+ g.fillStyle='#8298ab';g.textAlign='left';g.fillText('Start',ml,H-9);g.textAlign='right';g.fillText('End',W-mr,H-9);
+}
+function drawAllCharts(){if(!state.last)return;const a=state.series,x=state.ind,oos=state.last.oos;plot($('pricechart'),a.slice(-260).map(b=>b.c),x.e50.slice(-260));const values=[0];let total=0;for(const t of oos.trades){total+=t.R;values.push(total)}plot($('equitychart'),values)}
+$('run').addEventListener('click',runAnalysis);$('risk').addEventListener('input',()=>{$('risklabel').textContent=fmt(+$('risk').value,1)+'%'});$('mode').addEventListener('change',()=>{$('strategy').disabled=$('mode').value!=='manual'});
+$('strategy').disabled=true;
+document.querySelectorAll('.chip').forEach(b=>b.addEventListener('click',()=>loadMarket(b.dataset.feed)));
+$('csv').addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;try{const t=await file.text();state.custom[state.market]=parseCSV(t,'user');$('uploadname').textContent='Imported: '+file.name+' ('+state.custom[state.market].length+' candles)';await runAnalysis()}catch(err){showError('Could not import: '+err.message)}});
+$('reset').addEventListener('click',()=>{delete state.custom[state.market];$('csv').value='';$('uploadname').textContent='';loadMarket(state.market)});
+$('export').addEventListener('click',()=>{if(!state.last)return;const {selected,oos,r,settings}=state.last,header='entry_date,exit_date,direction,entry_price,exit_price,reason,net_r,strategy,tp_atr,sl_atr,max_hold_bars,round_trip_cost_bps\n';const rows=oos.trades.map(t=>[t.d,t.end,t.dir===1?'LONG':'SHORT',t.entry,t.exit,t.reason,t.R,selected.str,selected.tp,selected.sl,selected.hold,settings.fee].join(','));const blob=new Blob([header+rows.join('\n')],{type:'text/csv;charset=utf-8'});const link=document.createElement('a');link.href=URL.createObjectURL(blob);link.download=state.market+'_holdout_trades.csv';link.click();setTimeout(()=>URL.revokeObjectURL(link.href),2000)});
+window.addEventListener('resize',()=>drawAllCharts());loadMarket('btc');
+</script>
+<script id="live-workbench">
+"use strict";
+// All broker interaction is intentionally absent. Nothing here calls an authenticated account endpoint.
+const live={symbol:'btc',tf:240,quote:null,candles:[],indicator:null,signal:0,signalCandle:'',candidate:null,readiness:false,loading:false,alerts:false,
+ books:{btc:{},gold:{}},paper:{balance:1000,positions:[],closed:[]},lastNotice:'',checkedAt:0};
+const lid=id=>document.getElementById(id);
+const marketLabel=s=>s==='btc'?'BTC/USD':'XAU/USD';
+const cash=v=>Number.isFinite(v)?'$'+fmt(v,2):'—';
+function savePaper(){try{localStorage.setItem('signallab-paper-v2',JSON.stringify(live.paper))}catch(e){}}
+function restorePaper(){try{const v=JSON.parse(localStorage.getItem('signallab-paper-v2')||'null');if(v && Number.isFinite(v.balance)&&v.balance>=0&&Array.isArray(v.positions)&&Array.isArray(v.closed))live.paper=v}catch(e){}}
+function changeLiveStatus(text,status=''){lid('liveStatus').className='livebadge '+status;lid('liveStatus').textContent=text}
+function noticeUser(msg){lid('paperAction').textContent=msg}
+function liveFresh(){return !!(live.quote&&Number.isFinite(live.quote.mid)&&live.quote.mid>0&&Date.now()-live.quote.at<90000&&live.quote.providerAge<180000)}
+function useQuote(side,closing=false){const q=live.quote;if(!q)return NaN;return side===1?(closing?q.bid:q.ask):(closing?q.ask:q.bid)}
+async function fetchQuote(){const symbol=live.symbol;const url=symbol==='btc'?'https://api.kraken.com/0/public/Ticker?pair=XBTUSD':'https://api.gold-api.com/price/XAU';
+ const resp=await fetch(url,{cache:'no-store'});if(!resp.ok)throw Error('Quote provider returned HTTP '+resp.status);const v=await resp.json();let next;
+ if(symbol==='btc'){
+  if(v.error?.length)throw Error(v.error.join('; '));const k=Object.keys(v.result||{})[0],q=v.result?.[k];if(!q)throw Error('Kraken ticker missing');const ask=+q.a?.[0],bid=+q.b?.[0],mid=+q.c?.[0];
+  if(![mid,bid,ask].every(x=>Number.isFinite(x)&&x>0)||ask<bid)throw Error('Invalid bid/ask quote');next={mid,bid,ask,at:Date.now(),providerAge:0,source:'Kraken BTC/USD spot · ask/bid'};
+ }else{
+  const mid=+v.price,t=Date.parse(v.updatedAt||'');if(!(mid>0)||!Number.isFinite(t))throw Error('Gold reference quote lacks valid price or timestamp');next={mid,bid:mid,ask:mid,at:Date.now(),providerAge:Math.max(0,Date.now()-t),source:'Gold-API · XAU spot indication, no bid/ask',updatedAt:v.updatedAt};
+ }
+ if(symbol!==live.symbol)return;
+ live.quote=next;renderQuote();monitorPaperStops();renderPaper();
+}
+function renderQuote(){const q=live.quote,l=lid('livePrice'),st=lid('livePriceTime');
+ if(!q){l.textContent='—';st.textContent='No quote received';lid('paperBuy').disabled=true;lid('paperSell').disabled=true;return}
+ l.textContent=cash(q.mid);
+ st.textContent=q.source+' · '+(q.updatedAt?'provider '+new Date(q.updatedAt).toLocaleString():'received '+new Date(q.at).toLocaleTimeString());
+ lid('liveFeedNote').textContent=(live.symbol==='btc'?'Kraken spot BTC/USD can differ materially from BTCUSD CFD prices.':'Gold spot is a single indicative mid; not a broker execution quote.')+(q.providerAge>180000?' DATA OLD — market may be closed.':'');
+ lid('paperBuy').disabled=!liveFresh();lid('paperSell').disabled=!liveFresh();
+ if(liveFresh())changeLiveStatus('PRICE FEED ACTIVE','ok');else changeLiveStatus('STALE / MARKET CLOSED','warn');
+ displaySizing();
+}
+async function fetchCandles(){if(live.symbol==='gold'){
+  let a=live.books.gold[live.tf]||[];
+  if(!a.length){live.candles=[];live.candidate=null;live.signal=0;live.readiness=false;renderLiveSignal('Gold OHLC not connected: import recent, completed MT5 candle CSV for this timeframe.','off');return}
+  // Imported CSV is presumed to contain ONLY fully completed candles; user must check broker timezone and timeframe.
+  a=a.filter(x=>dateMillis(x.d) <=Date.now());
+  handleCandles(a,'Imported MT5 candle CSV (verify timezone/closed bar)');return;
+ }
+ const tf=live.tf;
+ const resp=await fetch('https://api.kraken.com/0/public/OHLC?pair=XBTUSD&interval='+tf,{cache:'no-store'});if(!resp.ok)throw Error('Candle feed HTTP '+resp.status);
+ const data=await resp.json();if(data.error?.length)throw Error(data.error.join('; '));const key=Object.keys(data.result||{}).find(k=>k!=='last');const rows=data.result?.[key];if(!Array.isArray(rows))throw Error('Kraken candles missing');
+ // Kraken documents that the very last frame is ALWAYS uncommitted. Never use it for signals.
+ const a=rows.slice(0,-1).map(row=>({d:new Date(+row[0]*1000).toISOString(),o:+row[1],h:+row[2],l:+row[3],c:+row[4]})).filter(r=>[r.o,r.h,r.l,r.c].every(Number.isFinite)&&r.o>0&&r.h>=Math.max(r.o,r.c)&&r.l<=Math.min(r.o,r.c));
+ if(tf!==live.tf||live.symbol!=='btc')return;handleCandles(a,'Kraken '+(tf===60?'1H':tf===240?'4H':'1D')+' • excludes active candle');
+}
+function handleCandles(a,source){live.candles=a;live.candidate=null;live.readiness=false;live.signal=0;
+ if(a.length<260){renderLiveSignal('Need at least 260 completed bars; received '+a.length+'.','off');return}
+ const idx=a.length-1,t=dateMillis(a[idx].d),age=Date.now()-(t+live.tf*60000);
+ if(!Number.isFinite(t)||age>2*live.tf*60000||age< -live.tf*60000){renderLiveSignal('Candle history is stale or its timezone/timeframe is inconsistent. No current signal.','off');return}
+ const x=indicators(a),s=signal(a,x,idx,'breakout');live.indicator=x;live.signal=s;live.signalCandle=a[idx].d;
+ const split=Math.floor(a.length*.7),out=backtest(a,x,'breakout',1.5,1,12,live.symbol==='btc'?20:8,split,idx);
+ live.readiness=out.n>=30&&out.netR>0&&out.pf>=1.1;
+ const qual=out.n+' holdout trades · '+fmt(out.wr,1)+'% wins · '+signed(out.netR)+' R · PF '+fmt(out.pf)+' · '+(live.readiness?'Preliminary pass; NOT live-validated':'NOT validated for live execution');
+ const dir=s===1?'BUY candidate':s===-1?'SELL candidate':'WAIT — no new breakout';
+ live.candidate=s?{side:s,atr:x.atr[idx],time:a[idx].d}:null;
+ renderLiveSignal(dir+' · '+source,live.readiness?(s===1?'buy':s===-1?'sell':''):'off',qual);
+ if(s&&live.alerts){const key=live.symbol+':'+live.tf+':'+a[idx].d+':'+s;
+   if(live.lastNotice!==key){live.lastNotice=key;try{if('Notification' in window&&Notification.permission==='granted')new Notification('SignalLab: '+marketLabel(live.symbol)+' '+dir,{body:'New completed '+(live.tf/60)+'-hour breakout. Historical backtesting is not a guarantee.'})}catch(e){}}}
+}
+function renderLiveSignal(msg,cls='',detail=''){const q=lid('liveSignal');q.className='sigribbon '+cls;q.textContent=msg;
+ lid('liveSignalMeta').textContent=detail||'No verified strategy signal can be calculated until fresh, completed candles are available.';
+ lid('liveCandleStatus').textContent=live.candles.length+' closed bars';lid('copySignal').disabled=!live.candidate||!liveFresh();}
+function fillLevels(){if(!live.candidate||!liveFresh())return noticeUser('No fresh setup and quote to load.');
+ const dir=live.candidate.side,entry=useQuote(dir),atr=live.candidate.atr;
+ lid('paperStop').value=(entry-dir*atr).toFixed(2);lid('paperTarget').value=(entry+dir*atr*1.5).toFixed(2);displaySizing();noticeUser('Hypothetical 1 ATR stop / 1.5 ATR take-profit loaded. Not broker-validated.');
+}
+function quoteOrder(dir){const q=live.quote,entry=useQuote(dir),sl=+lid('paperStop').value,tp=+lid('paperTarget').value,b=live.paper.balance;
+ if(!liveFresh()||!(entry>0))return{err:'A fresh indicative price is required.'};
+ if(!(sl>0&&tp>0&&Number.isFinite(sl)&&Number.isFinite(tp)))return{err:'Enter positive stop and target prices.'};
+ if(dir===1&&!(sl<entry&&tp>entry)||dir===-1&&!(sl>entry&&tp<entry))return{err:'For BUY: SL below entry and TP above. For SELL: SL above entry and TP below.'};
+ const riskPercent=+lid('paperRisk').value,feeBps=+lid('paperCost').value;
+ if(!Number.isFinite(feeBps)||feeBps<0||feeBps>500)return{err:'Extra cost must be between 0 and 500 bps.'};
+ const riskDollars=b*riskPercent/100,stopDistance=Math.abs(entry-sl),perUnit=stopDistance+entry*feeBps/10000;
+ const qty=Math.min(riskDollars/perUnit,b/entry);if(!(qty>0))return{err:'Not enough paper equity.'};
+ return{dir,entry,sl,tp,qty,stopDistance,riskDollars,feeBps,symbol:live.symbol,notional:qty*entry,unit:live.symbol==='btc'?'BTC':'troy oz'};
+}
+function displaySizing(){const dir=+lid('paperStop').value<useQuote(1)?1:-1,order=quoteOrder(dir);
+ if(order.err){lid('paperSizing').textContent=order.err+' Position is capped at 1× demo equity (no simulated leverage).';return}
+ lid('paperSizing').textContent='Estimated size: '+fmt(order.qty,6)+' '+order.unit+' · Notional '+cash(order.notional)+' · Risk cap '+cash(order.riskDollars)+' · 1× max exposure. Direction recalculated for each BUY/SELL button.';
+}
+function openPaperTrade(dir){const t=quoteOrder(dir);if(t.err)return noticeUser(t.err);
+ const pending=live.paper.positions.find(p=>p.symbol===t.symbol);if(pending)return noticeUser('Close your existing '+marketLabel(t.symbol)+' demo position first. One open trade per instrument.');
+ if(!confirm('Open a '+(dir===1?'BUY':'SELL')+' PAPER trade? No real broker order will be placed.\n\n'+marketLabel(t.symbol)+' at indicative '+cash(t.entry)+'\nStop '+cash(t.sl)+' | Target '+cash(t.tp)+'\nSize '+fmt(t.qty,6)+' '+t.unit+' (not MT5 lots)\n\nContinue?'))return;
+ const p={...t,id:Date.now()+'-'+Math.floor(Math.random()*999999),opened:new Date().toISOString(),source:live.quote.source};
+ live.paper.positions.push(p);savePaper();renderPaper();noticeUser('DEMO '+(dir===1?'BUY':'SELL')+' recorded locally. No real order was sent.');
+}
+function closePaperTrade(id,reason='manual'){const idx=live.paper.positions.findIndex(p=>p.id===id);if(idx<0)return;
+ const p=live.paper.positions[idx];if(p.symbol!==live.symbol||!liveFresh())return noticeUser('Select the matching instrument and refresh a current quote before closing.');
+ const exit=useQuote(p.dir,true),gross=p.dir*(exit-p.entry)*p.qty,fees=(p.entry+exit)*p.qty*p.feeBps/20000,pnl=gross-fees;
+ live.paper.positions.splice(idx,1);live.paper.balance+=pnl;live.paper.closed.push({...p,closed:new Date().toISOString(),exit,reason,fees,pnl});savePaper();renderPaper();noticeUser('DEMO trade closed at current indicative quote, P&L '+cash(pnl)+'.');
+}
+function monitorPaperStops(){if(!liveFresh())return;const stops=live.paper.positions.filter(p=>p.symbol===live.symbol);
+ for(const p of stops){const px=useQuote(p.dir,true);if(p.dir===1&&px<=p.sl||p.dir===-1&&px>=p.sl)closePaperTrade(p.id,'stop / observed tick');
+ else if(p.dir===1&&px>=p.tp||p.dir===-1&&px<=p.tp)closePaperTrade(p.id,'target / observed tick');}
+}
+function renderPaper(){const p=live.paper,closed=p.closed;lid('paperBalance').textContent=cash(p.balance);lid('paperCount').textContent=String(p.positions.length);
+ const total=closed.reduce((z,x)=>z+x.pnl,0);lid('paperPL').textContent=cash(total);lid('paperPL').style.color=total<0?'var(--red)':'var(--cyan)';
+ lid('paperWR').textContent=closed.length?fmt(100*closed.filter(t=>t.pnl>0).length/closed.length,1)+'%':'—';
+ lid('paperPositions').innerHTML=p.positions.length?p.positions.slice().reverse().map(t=>{
+ const mark=live.quote?.mid&&t.symbol===live.symbol&&liveFresh()?useQuote(t.dir,true):NaN,u=Number.isFinite(mark)?t.dir*(mark-t.entry)*t.qty-(t.entry+mark)*t.qty*t.feeBps/20000:NaN;
+ return `<div class="position"><b>${esc(marketLabel(t.symbol))} ${t.dir===1?'BUY':'SELL'}</b> · ${fmt(t.qty,6)} ${t.unit}<div class="footnote">${cash(t.entry)} → ${Number.isFinite(mark)?cash(mark):'select market to mark'} · Unrealised ${Number.isFinite(u)?cash(u):'—'}<br>SL ${cash(t.sl)} / TP ${cash(t.tp)}</div><button class="quietbtn" data-closepaper="${esc(t.id)}">Close demo position</button></div>`}).join(''):'<p class="footnote">No paper positions open.</p>';
+ lid('paperHistory').innerHTML=closed.length?closed.slice(-4).reverse().map(t=>`<div class="position"><b>${esc(marketLabel(t.symbol))} ${t.dir===1?'BUY':'SELL'}</b> <span style="color:${t.pnl<0?'var(--red)':'var(--cyan)'}">${cash(t.pnl)}</span><div class="footnote">${esc(t.reason)} · ${new Date(t.closed).toLocaleString()}</div></div>`).join(''):'<p class="footnote">No completed simulated trades.</p>';
+ document.querySelectorAll('[data-closepaper]').forEach(b=>b.addEventListener('click',()=>{if(confirm('Close this PAPER position at the next available current indicative quote?'))closePaperTrade(b.dataset.closepaper)}));
+}
+async function copyOrder(){const dir=live.candidate?.side||1,t=quoteOrder(dir);const currency=marketLabel(live.symbol);
+ const body=t.err?`SignalLab manual broker checklist\nMarket: ${currency}\nDirection: NOT SELECTED\n${t.err}\nNo real trade executed. Use broker-specific prices, lots and spread.`:
+ `SIGNALLAB — MANUAL EXECUTION CHECKLIST\nMarket: ${currency}\nDirection: ${dir===1?'BUY':'SELL'}\nIndicative entry USD: ${t.entry.toFixed(2)}\nStop USD: ${t.sl.toFixed(2)}\nTarget USD: ${t.tp.toFixed(2)}\nIndicative quantity: ${t.qty.toFixed(6)} ${t.unit} (NOT MT5 lots)\nIllustrative notional: USD ${t.notional.toFixed(2)}\nAssumed round-trip bps: ${t.feeBps}\nSource: ${live.quote.source}\nTime: ${new Date().toISOString()}\nWARNING: NOT AN EXECUTED ORDER. Verify broker contract size, spreads, funding, instrument suffix, slippage, margin and account restrictions. Historical performance is not guaranteed.`;
+ try{await navigator.clipboard.writeText(body);noticeUser('Manual ticket copied. This did NOT submit an order.')}catch(e){const ta=document.createElement('textarea');ta.value=body;document.body.append(ta);ta.select();document.execCommand('copy');ta.remove();noticeUser('Ticket copy attempted; verify your clipboard. No live order submitted.')}
+}
+function downloadPaperCsv(){const cols=['id','symbol','opened','closed','dir','entry','exit','sl','tp','qty','unit','reason','fees','pnl'];const lines=[cols.join(',')];
+ for(const t of live.paper.closed){lines.push(cols.map(k=>JSON.stringify(t[k]??'')).join(','))}const blob=new Blob([lines.join('\n')],{type:'text/csv'}),href=URL.createObjectURL(blob),a=document.createElement('a');a.href=href;a.download='signallab_demo_trades.csv';a.click();setTimeout(()=>URL.revokeObjectURL(href),5000)}
+async function refreshLive(){if(live.loading)return;live.loading=true;changeLiveStatus('Loading…');
+ try{const res=await Promise.allSettled([fetchQuote(),fetchCandles()]);const fails=res.filter(x=>x.status==='rejected');if(fails.length){const errs=fails.map(x=>x.reason?.message||String(x.reason));
+     if(fails.length===2)changeLiveStatus('FEED UNAVAILABLE','warn');else if(liveFresh())changeLiveStatus('PARTIAL FEED','warn');
+     lid('liveSignalMeta').textContent+=(lid('liveSignalMeta').textContent?' · ':'')+'Feed problem: '+errs.join(' / ');
+   }}finally{live.loading=false}}
+function selectLive(){live.symbol=lid('liveSymbol').value;live.tf=+lid('liveTF').value;live.quote=null;live.candles=[];live.candidate=null;live.signal=0;
+ lid('paperCost').value=live.symbol==='btc'?'20':'8';lid('livePrice').textContent='—';lid('livePriceTime').textContent='Loading price…';lid('copySignal').disabled=true;
+ lid('liveSignal').textContent='Loading completed candles…';renderQuote();refreshLive();}
+lid('liveSymbol').addEventListener('change',selectLive);lid('liveTF').addEventListener('change',selectLive);
+lid('liveRefresh').addEventListener('click',refreshLive);lid('copySignal').addEventListener('click',fillLevels);
+lid('liveExportTicket').addEventListener('click',copyOrder);lid('paperStop').addEventListener('input',displaySizing);lid('paperTarget').addEventListener('input',displaySizing);
+lid('paperCost').addEventListener('input',displaySizing);lid('paperRisk').addEventListener('change',displaySizing);
+lid('paperBuy').addEventListener('click',()=>openPaperTrade(1));lid('paperSell').addEventListener('click',()=>openPaperTrade(-1));
+lid('paperReset').addEventListener('click',()=>{if(confirm('Reset the entire DEMO portfolio to $1,000? This deletes stored paper trade history on this device.')){live.paper={balance:1000,positions:[],closed:[]};savePaper();renderPaper();noticeUser('Demo portfolio reset; no brokerage account was affected.')}});
+lid('paperExport').addEventListener('click',downloadPaperCsv);
+lid('brokerCandles').addEventListener('change',async e=>{const f=e.target.files?.[0];if(!f)return;
+ try{const data=parseCSV(await f.text(),'user');live.books.gold[live.tf]=data;noticeUser('Imported '+data.length+' broker candles for the '+live.tf+' minute Gold timeframe; confirm timeframe and UTC timestamps.');if(live.symbol==='gold')fetchCandles()}
+ catch(err){noticeUser('Import failed: '+err.message)}});
+lid('liveNotify').addEventListener('click',async()=>{if(!('Notification' in window)){noticeUser('System notifications unavailable in this browser. Keep page open to view alerts.');return}
+ if(!live.alerts){const p=await Notification.requestPermission();if(p!=='granted'){noticeUser('Notification access not granted.');return}live.alerts=true;lid('liveNotify').textContent='Alerts enabled';noticeUser('Browser alerts enabled. The tab must remain open; these are not persistent server-side alerts.')}
+ else{live.alerts=false;lid('liveNotify').textContent='Enable alerts';noticeUser('Browser signal alerts disabled.')}});
+restorePaper();renderPaper();refreshLive();setInterval(()=>{if(!document.hidden)refreshLive()},45000);
+</script>
+
+</body></html>
