@@ -27,7 +27,7 @@
   <div class="livehead"><h3>Market monitor</h3><span class="livebadge">Reference, not broker quote</span></div>
   <div class="live-settings"><div class="field"><label for="liveSymbol">Instrument</label><select id="liveSymbol"><option value="btc">Bitcoin / USD</option><option value="gold">Gold / XAUUSD</option></select></div><div class="field"><label for="liveTF">Signal candle</label><select id="liveTF"><option value="60">1 hour</option><option value="240" selected>4 hours</option><option value="1440">1 day</option></select></div></div>
   <div id="livePrice" class="bigquote">—</div><div id="livePriceTime" class="livemeta">Awaiting quote…</div>
-  <div id="liveFeedNote" class="livemeta">BTC: Kraken public USD quotes. Gold: third-party reference spot feed.</div>
+  <div id="liveFeedNote" class="livemeta">BTC: Kraken BTC/USD with Binance BTC/USDT fallback. Gold: indicative spot feed.</div>
   <div class="dividerline"></div><div class="livehead"><b>Completed candle scan</b><span id="liveCandleStatus" class="livebadge">Not evaluated</span></div>
   <div id="liveSignal" class="sigribbon">Fetching OHLC candles…</div><p id="liveSignalMeta" class="footnote">The system never extrapolates unfinished candles into a confirmed strategy signal.</p>
   <div class="livebuttons" style="margin-top:12px"><button id="copySignal" class="quietbtn" disabled>Load signal levels</button><button id="liveExportTicket" class="quietbtn">Copy order ticket</button></div>
@@ -52,7 +52,7 @@
   <div class="livehead" style="margin:16px 0 8px"><b>Recent closed trades</b><button id="paperExport" class="quietbtn">Export CSV</button></div><div id="paperHistory" class="positionlist"><p class="footnote">Closed trades appear here.</p></div>
  </section>
 </div>
-<section class="panel livefoot"><b>Important:</b> Alerts are informational. BTC market data is sourced from Kraken and can differ from an Exness/MT5 CFD quote. Gold reference spot has no broker candle stream until you import one. Alerts and auto-close of paper trades only work while this page remains active and connected; no positions or stops are protected by a broker. An 80% historical hit rate did <b>not</b> establish a profitable strategy.</section>
+<section class="panel livefoot"><b>Important:</b> Alerts are informational. BTC references are Kraken USD or Binance USDT fallback, which can differ from CFD broker prices. Gold reference spot has no broker candle stream until you import one. Alerts and auto-close of paper trades only work while this page remains active and connected; no positions or stops are protected by a broker. An 80% historical hit rate did <b>not</b> establish a profitable strategy.</section>
 </div>
 <div class="layout"><aside class="panel"><div class="sectionhead"><h2 style="margin:0">Research settings</h2><span class="smallpill">v1.0</span></div>
 <div class="fake-label">Market / dataset</div><div class="chiprow"><button class="chip active" data-feed="btc">BTC · 1D</button><button class="chip" data-feed="gold">Gold · 1D</button><button class="chip" data-feed="goldh">Gold · 1H</button></div>
@@ -243,12 +243,21 @@ function noticeUser(msg){lid('paperAction').textContent=msg}
 function liveFresh(){return !!(live.quote&&Number.isFinite(live.quote.mid)&&live.quote.mid>0&&Date.now()-live.quote.at<90000&&live.quote.providerAge<180000)}
 function useQuote(side,closing=false){const q=live.quote;if(!q)return NaN;return side===1?(closing?q.bid:q.ask):(closing?q.ask:q.bid)}
 async function fetchQuote(){const symbol=live.symbol;const url=symbol==='btc'?'https://api.kraken.com/0/public/Ticker?pair=XBTUSD':'https://api.gold-api.com/price/XAU';
- const resp=await fetch(url,{cache:'no-store'});if(!resp.ok)throw Error('Quote provider returned HTTP '+resp.status);const v=await resp.json();let next;
- if(symbol==='btc'){
+ let v,next,preferred='kraken';
+ try{const resp=await fetch(url,{cache:'no-store'});if(!resp.ok)throw Error('Quote provider returned HTTP '+resp.status);v=await resp.json()}
+ catch(e){if(symbol!=='btc')throw e;preferred='binance';const [b,p]=await Promise.all([
+ fetch('https://data-api.binance.vision/api/v3/ticker/bookTicker?symbol=BTCUSDT',{cache:'no-store'}),
+ fetch('https://data-api.binance.vision/api/v3/ticker/price?symbol=BTCUSDT',{cache:'no-store'})]);
+ if(!b.ok||!p.ok)throw Error('Both Kraken USD and Binance USDT reference prices failed');
+ const bb=await b.json(),pp=await p.json(),bid=+bb.bidPrice,ask=+bb.askPrice,mid=+pp.price;
+ if(![mid,bid,ask].every(x=>x>0&&Number.isFinite(x))||ask<bid)throw Error('Binance quote invalid');
+ next={mid,bid,ask,at:Date.now(),providerAge:0,exchange:'binance',source:'Binance BTC/USDT proxy · NOT USD'};
+ }
+ if(symbol==='btc'&&preferred==='kraken'){
   if(v.error?.length)throw Error(v.error.join('; '));const k=Object.keys(v.result||{})[0],q=v.result?.[k];if(!q)throw Error('Kraken ticker missing');const ask=+q.a?.[0],bid=+q.b?.[0],mid=+q.c?.[0];
-  if(![mid,bid,ask].every(x=>Number.isFinite(x)&&x>0)||ask<bid)throw Error('Invalid bid/ask quote');next={mid,bid,ask,at:Date.now(),providerAge:0,source:'Kraken BTC/USD spot · ask/bid'};
- }else{
-  const mid=+v.price,t=Date.parse(v.updatedAt||'');if(!(mid>0)||!Number.isFinite(t))throw Error('Gold reference quote lacks valid price or timestamp');next={mid,bid:mid,ask:mid,at:Date.now(),providerAge:Math.max(0,Date.now()-t),source:'Gold-API · XAU spot indication, no bid/ask',updatedAt:v.updatedAt};
+  if(![mid,bid,ask].every(x=>Number.isFinite(x)&&x>0)||ask<bid)throw Error('Invalid bid/ask quote');next={mid,bid,ask,at:Date.now(),providerAge:0,exchange:'kraken',source:'Kraken BTC/USD spot · ask/bid'};
+ }else if(symbol==='gold'){
+  const mid=+v.price,t=Date.parse(v.updatedAt||'');if(!(mid>0)||!Number.isFinite(t))throw Error('Gold reference quote lacks valid price or timestamp');next={mid,bid:mid,ask:mid,at:Date.now(),providerAge:Math.max(0,Date.now()-t),exchange:'gold-api',source:'Gold-API · XAU spot indication, no bid/ask',updatedAt:v.updatedAt};
  }
  if(symbol!==live.symbol)return;
  live.quote=next;renderQuote();monitorPaperStops();renderPaper();
@@ -257,7 +266,7 @@ function renderQuote(){const q=live.quote,l=lid('livePrice'),st=lid('livePriceTi
  if(!q){l.textContent='—';st.textContent='No quote received';lid('paperBuy').disabled=true;lid('paperSell').disabled=true;return}
  l.textContent=cash(q.mid);
  st.textContent=q.source+' · '+(q.updatedAt?'provider '+new Date(q.updatedAt).toLocaleString():'received '+new Date(q.at).toLocaleTimeString());
- lid('liveFeedNote').textContent=(live.symbol==='btc'?'Kraken spot BTC/USD can differ materially from BTCUSD CFD prices.':'Gold spot is a single indicative mid; not a broker execution quote.')+(q.providerAge>180000?' DATA OLD — market may be closed.':'');
+ lid('liveFeedNote').textContent=(live.symbol==='btc'?'BTC public spot quotes (Kraken USD or Binance USDT fallback) differ from broker CFD quotes.':'Gold spot is a single indicative mid; not a broker execution quote.')+(q.providerAge>180000?' DATA OLD — market may be closed.':'');
  lid('paperBuy').disabled=!liveFresh();lid('paperSell').disabled=!liveFresh();
  if(liveFresh())changeLiveStatus('PRICE FEED ACTIVE','ok');else changeLiveStatus('STALE / MARKET CLOSED','warn');
  displaySizing();
@@ -267,33 +276,43 @@ async function fetchCandles(){if(live.symbol==='gold'){
   if(!a.length){live.candles=[];live.candidate=null;live.signal=0;live.readiness=false;renderLiveSignal('Gold OHLC not connected: import recent, completed MT5 candle CSV for this timeframe.','off');return}
   // Imported CSV is presumed to contain ONLY fully completed candles; user must check broker timezone and timeframe.
   a=a.filter(x=>dateMillis(x.d) <=Date.now());
-  handleCandles(a,'Imported MT5 candle CSV (verify timezone/closed bar)');return;
+  handleCandles(a,'Imported MT5 candle CSV (verify timezone/closed bar)','broker');return;
  }
  const tf=live.tf;
- const resp=await fetch('https://api.kraken.com/0/public/OHLC?pair=XBTUSD&interval='+tf,{cache:'no-store'});if(!resp.ok)throw Error('Candle feed HTTP '+resp.status);
- const data=await resp.json();if(data.error?.length)throw Error(data.error.join('; '));const key=Object.keys(data.result||{}).find(k=>k!=='last');const rows=data.result?.[key];if(!Array.isArray(rows))throw Error('Kraken candles missing');
- // Kraken documents that the very last frame is ALWAYS uncommitted. Never use it for signals.
- const a=rows.slice(0,-1).map(row=>({d:new Date(+row[0]*1000).toISOString(),o:+row[1],h:+row[2],l:+row[3],c:+row[4]})).filter(r=>[r.o,r.h,r.l,r.c].every(Number.isFinite)&&r.o>0&&r.h>=Math.max(r.o,r.c)&&r.l<=Math.min(r.o,r.c));
- if(tf!==live.tf||live.symbol!=='btc')return;handleCandles(a,'Kraken '+(tf===60?'1H':tf===240?'4H':'1D')+' • excludes active candle');
+let a=[],exchange='kraken';
+ try{
+  const resp=await fetch('https://api.kraken.com/0/public/OHLC?pair=XBTUSD&interval='+tf,{cache:'no-store'});if(!resp.ok)throw Error('Candle feed HTTP '+resp.status);
+  const data=await resp.json();if(data.error?.length)throw Error(data.error.join('; '));const key=Object.keys(data.result||{}).find(k=>k!=='last');const rows=data.result?.[key];if(!Array.isArray(rows))throw Error('Kraken candles missing');
+  // Kraken: last item is always uncommitted. Exclude it.
+  a=rows.slice(0,-1).map(row=>({d:new Date(+row[0]*1000).toISOString(),o:+row[1],h:+row[2],l:+row[3],c:+row[4]})).filter(r=>[r.o,r.h,r.l,r.c].every(Number.isFinite)&&r.o>0&&r.h>=Math.max(r.o,r.c)&&r.l<=Math.min(r.o,r.c));
+ }catch(e){
+  exchange='binance';const tfName=tf===60?'1h':tf===240?'4h':'1d';
+  const resp=await fetch('https://data-api.binance.vision/api/v3/klines?symbol=BTCUSDT&interval='+tfName+'&limit=720',{cache:'no-store'});
+  if(!resp.ok)throw Error('Kraken and Binance candle providers unavailable');const rows=await resp.json();
+  if(!Array.isArray(rows))throw Error('Binance kline response invalid');
+  // Binance: the 7th item contains close time; check it has passed.
+  a=rows.filter(r=>+r[6]<Date.now()).map(r=>({d:new Date(+r[0]).toISOString(),o:+r[1],h:+r[2],l:+r[3],c:+r[4]})).filter(r=>[r.o,r.h,r.l,r.c].every(Number.isFinite)&&r.o>0&&r.h>=Math.max(r.o,r.c)&&r.l<=Math.min(r.o,r.c));
+ }
+ if(tf!==live.tf||live.symbol!=='btc')return;handleCandles(a,(exchange==='kraken'?'Kraken BTC/USD':'Binance BTC/USDT proxy')+' '+(tf===60?'1H':tf===240?'4H':'1D')+' • completed only',exchange);
 }
-function handleCandles(a,source){live.candles=a;live.candidate=null;live.readiness=false;live.signal=0;
+function handleCandles(a,source,exchange='broker'){live.candleExchange=exchange;live.candles=a;live.candidate=null;live.readiness=false;live.signal=0;
  if(a.length<260){renderLiveSignal('Need at least 260 completed bars; received '+a.length+'.','off');return}
  const idx=a.length-1,t=dateMillis(a[idx].d),age=Date.now()-(t+live.tf*60000);
  if(!Number.isFinite(t)||age>2*live.tf*60000||age< -live.tf*60000){renderLiveSignal('Candle history is stale or its timezone/timeframe is inconsistent. No current signal.','off');return}
  const x=indicators(a),s=signal(a,x,idx,'breakout');live.indicator=x;live.signal=s;live.signalCandle=a[idx].d;
  const split=Math.floor(a.length*.7),out=backtest(a,x,'breakout',1.5,1,12,live.symbol==='btc'?20:8,split,idx);
  live.readiness=out.n>=30&&out.netR>0&&out.pf>=1.1;
- const qual=out.n+' holdout trades · '+fmt(out.wr,1)+'% wins · '+signed(out.netR)+' R · PF '+fmt(out.pf)+' · '+(live.readiness?'Preliminary pass; NOT live-validated':'NOT validated for live execution');
+ const mismatch=live.symbol==='btc'&&live.quote&&live.quote.exchange!==exchange;const qual=(mismatch?'QUOTE/CANDLE VENUE MISMATCH — reference levels disabled · ':'')+out.n+' holdout trades · '+fmt(out.wr,1)+'% wins · '+signed(out.netR)+' R · PF '+fmt(out.pf)+' · '+(live.readiness?'Preliminary pass; NOT live-validated':'NOT validated for live execution');
  const dir=s===1?'BUY candidate':s===-1?'SELL candidate':'WAIT — no new breakout';
  live.candidate=s?{side:s,atr:x.atr[idx],time:a[idx].d}:null;
  renderLiveSignal(dir+' · '+source,live.readiness?(s===1?'buy':s===-1?'sell':''):'off',qual);
- if(s&&live.alerts){const key=live.symbol+':'+live.tf+':'+a[idx].d+':'+s;
+ if(s&&live.alerts&&live.quote?.exchange===live.candleExchange){const key=live.symbol+':'+live.tf+':'+a[idx].d+':'+s;
    if(live.lastNotice!==key){live.lastNotice=key;try{if('Notification' in window&&Notification.permission==='granted')new Notification('SignalLab: '+marketLabel(live.symbol)+' '+dir,{body:'New completed '+(live.tf/60)+'-hour breakout. Historical backtesting is not a guarantee.'})}catch(e){}}}
 }
 function renderLiveSignal(msg,cls='',detail=''){const q=lid('liveSignal');q.className='sigribbon '+cls;q.textContent=msg;
  lid('liveSignalMeta').textContent=detail||'No verified strategy signal can be calculated until fresh, completed candles are available.';
- lid('liveCandleStatus').textContent=live.candles.length+' closed bars';lid('copySignal').disabled=!live.candidate||!liveFresh();}
-function fillLevels(){if(!live.candidate||!liveFresh())return noticeUser('No fresh setup and quote to load.');
+ lid('liveCandleStatus').textContent=live.candles.length+' closed bars';lid('copySignal').disabled=!live.candidate||!liveFresh()||(live.symbol==='btc'&&live.quote?.exchange!==live.candleExchange);}
+function fillLevels(){if(!live.candidate||!liveFresh()||(live.symbol==='btc'&&live.quote?.exchange!==live.candleExchange))return noticeUser('No fresh, matching-source quote and setup to load.');
  const dir=live.candidate.side,entry=useQuote(dir),atr=live.candidate.atr;
  lid('paperStop').value=(entry-dir*atr).toFixed(2);lid('paperTarget').value=(entry+dir*atr*1.5).toFixed(2);displaySizing();noticeUser('Hypothetical 1 ATR stop / 1.5 ATR take-profit loaded. Not broker-validated.');
 }
@@ -347,7 +366,7 @@ async function refreshLive(){if(live.loading)return;live.loading=true;changeLive
      if(fails.length===2)changeLiveStatus('FEED UNAVAILABLE','warn');else if(liveFresh())changeLiveStatus('PARTIAL FEED','warn');
      lid('liveSignalMeta').textContent+=(lid('liveSignalMeta').textContent?' · ':'')+'Feed problem: '+errs.join(' / ');
    }}finally{live.loading=false}}
-function selectLive(){live.symbol=lid('liveSymbol').value;live.tf=+lid('liveTF').value;live.quote=null;live.candles=[];live.candidate=null;live.signal=0;
+function selectLive(){live.symbol=lid('liveSymbol').value;live.tf=+lid('liveTF').value;live.quote=null;live.candles=[];live.candidate=null;live.candleExchange=null;live.signal=0;
  lid('paperCost').value=live.symbol==='btc'?'20':'8';lid('livePrice').textContent='—';lid('livePriceTime').textContent='Loading price…';lid('copySignal').disabled=true;
  lid('liveSignal').textContent='Loading completed candles…';renderQuote();refreshLive();}
 lid('liveSymbol').addEventListener('change',selectLive);lid('liveTF').addEventListener('change',selectLive);
