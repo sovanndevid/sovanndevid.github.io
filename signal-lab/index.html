@@ -52,6 +52,12 @@
   <div class="livehead" style="margin:16px 0 8px"><b>Recent closed trades</b><button id="paperExport" class="quietbtn">Export CSV</button></div><div id="paperHistory" class="positionlist"><p class="footnote">Closed trades appear here.</p></div>
  </section>
 </div>
+<section class="panel livefoot" id="mt5integration">
+ <h3 style="margin:0 0 7px">Trade from MetaTrader 5 (desktop)</h3>
+ <p style="margin:0 0 10px">SignalLab now has a separate <b>MT5 Expert Advisor</b> that runs directly on your broker's chart. It uses the broker's own prices for 20-bar breakout alerts and stop/target estimates. It defaults to <b>signals only</b>; automatic demo and real orders require explicit settings in MT5. The website itself does <b>not</b> connect to or trade your MT5 account.</p>
+ <div class="tradelinks"><a href="https://raw.githubusercontent.com/sovanndevid/sovanndevid.github.io/main/signal-lab/SignalLab_MT5_ExpertAdvisor.mq5" target="_blank" rel="noopener">MT5 expert source (.mq5) ↗</a><a href="https://github.com/sovanndevid/sovanndevid.github.io/blob/main/signal-lab/MT5_SETUP.md" target="_blank" rel="noopener">MT5 installation &amp; risk guide ↗</a></div>
+ <p class="footnote" style="margin:10px 0 0">A high historical win rate is not a verified live edge. Test on your exact symbol with MT5 Strategy Tester and demo first. Trading eligibility depends on your country of residence and broker licence.</p>
+</section>
 <section class="panel livefoot"><b>Important:</b> Alerts are informational. BTC references are Kraken USD or Binance USDT fallback, which can differ from CFD broker prices. Gold reference spot has no broker candle stream until you import one. Alerts and auto-close of paper trades only work while this page remains active and connected; no positions or stops are protected by a broker. An 80% historical hit rate did <b>not</b> establish a profitable strategy.</section>
 </div>
 <div class="layout"><aside class="panel"><div class="sectionhead"><h2 style="margin:0">Research settings</h2><span class="smallpill">v1.0</span></div>
